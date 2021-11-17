@@ -6,23 +6,12 @@ import java.util.Random;
 // TODO : redéfinir la fonction hashValue() et equals(Object) si vous souhaitez utiliser la hashmap de VueControleurGrille avec VueCase en clef
 
 public class VueCase extends JPanel {
-    private int x, y;
-    private CaseType type;
+
     private static Random rnd = new Random();
+    CaseModele c;
 
-    public VueCase(int _x, int _y) {
-        x = _x;
-        y = _y;
-
-        rndType();
-
-    }
-
-    public void rndType() {
-
-
-        type = CaseType.values()[rnd.nextInt(CaseType.values().length)];
-        repaint();
+    public VueCase() {
+        /* A FAIRE PLUS TARD */
     }
 
     private void drawNoon(Graphics g) {
@@ -52,7 +41,7 @@ public class VueCase extends JPanel {
         Rectangle2D deltaText =  g.getFont().getStringBounds("0", g.getFontMetrics().getFontRenderContext()); // "0" utilisé pour gabarit
 
 
-        switch(type) {
+        switch(c.type) {
             case S1 :
                 g.drawString("1", getWidth()/2 - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
                 break;
@@ -102,7 +91,7 @@ public class VueCase extends JPanel {
         }
     }
     public String toString() {
-        return x + ", " + y;
+        return c.x + ", " + c.y;
 
     }
 
