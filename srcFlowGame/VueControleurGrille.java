@@ -1,10 +1,13 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
+import java.util.Observable;
+import java.util.Observer;
 
-public class VueControleurGrille extends JFrame {
+public class VueControleurGrille extends JFrame implements Observer{
     private static final int PIXEL_PER_SQUARE = 60;
     // tableau de cases : i, j -> case
     private VueCase[][] tabCV;
@@ -26,7 +29,7 @@ public class VueControleurGrille extends JFrame {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
 
-                tabCV[i][j] = new VueCase(i, j);
+                tabCV[i][j] = new VueCase();//i, j);
                 contentPane.add(tabCV[i][j]);
 
                 hashmap.put(tabCV[i][j], new Point(j, i));
@@ -37,7 +40,7 @@ public class VueControleurGrille extends JFrame {
                         //Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
 
 
-                        ((VueCase) e.getSource()).rndType();
+                        //((VueCase) e.getSource()).rndType();
                         System.out.println("mousePressed : " + e.getSource());
 
                     }
@@ -71,7 +74,10 @@ public class VueControleurGrille extends JFrame {
         VueControleurGrille vue = new VueControleurGrille(6);
 
         vue.setVisible(true);
-
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+    // A FAIRE
+    }
 }

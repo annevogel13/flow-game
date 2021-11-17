@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class VueCase extends JPanel {
 
-    private static Random rnd = new Random();
+
     CaseModele c;
 
     public VueCase() {
