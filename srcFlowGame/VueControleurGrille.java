@@ -18,7 +18,8 @@ public class VueControleurGrille extends JFrame implements Observer{
     // chaque entrée dans un composant - voir (**)
     private JComponent currentComponent;
 
-    public VueControleurGrille(int size) {
+    public VueControleurGrille(Jeux jeu) {
+        int size = jeu.size;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(size * PIXEL_PER_SQUARE, size * PIXEL_PER_SQUARE);
         tabCV = new VueCase[size][size];
@@ -28,8 +29,9 @@ public class VueControleurGrille extends JFrame implements Observer{
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-
-                tabCV[i][j] = new VueCase();//i, j);
+                final int ci = i;
+                final int cj = j;
+                tabCV[i][j] = new VueCase(jeu.tab_jeu[i][j]);
                 contentPane.add(tabCV[i][j]);
 
                 hashmap.put(tabCV[i][j], new Point(j, i));
@@ -39,7 +41,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                     public void mousePressed(MouseEvent e) {
                         //Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
 
-
+                        jeu.rnd(ci, cj);
                         //((VueCase) e.getSource()).rndType();
                         System.out.println("mousePressed : " + e.getSource());
 
@@ -69,15 +71,25 @@ public class VueControleurGrille extends JFrame implements Observer{
     }
 
 
-    public static void main(String[] args) {
 
-        VueControleurGrille vue = new VueControleurGrille(6);
-
-        vue.setVisible(true);
-    }
 
     @Override
     public void update(Observable o, Object arg) {
-    // A FAIRE
+        //a faire
+
+        for (int i = 0; i < tabCV.length; i++) {
+            for (int j = 0; j < tabCV.length; j++) {
+
+                tabCV[i][j].repaint();
+            }
+        }
+
+    }
+
+    public static void main(String[] args) {
+        Jeux jeu = new Jeux(6);
+        VueControleurGrille vue = new VueControleurGrille(jeu);
+        jeu.addObserver(vue);
+        vue.setVisible(true);
     }
 }

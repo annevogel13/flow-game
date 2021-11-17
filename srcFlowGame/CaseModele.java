@@ -5,9 +5,14 @@ public class CaseModele {
     private static Random rnd = new Random();
     public int x, y;
 
+    public CaseModele(){
+        rndType();
+
+    }
+
     public void rndType() {
-        //type = CaseType.values()[rnd.nextInt(CaseType.values().length)];
-        //repaint();private int x, y;
+
+        this.type = CaseType.values()[rnd.nextInt(CaseType.values().length)];
     }
 
 }

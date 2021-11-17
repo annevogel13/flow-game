@@ -8,10 +8,10 @@ import java.util.Random;
 public class VueCase extends JPanel {
 
 
-    CaseModele c;
+    public CaseModele c;
 
-    public VueCase() {
-        /* A FAIRE PLUS TARD */
+    public VueCase(CaseModele cm) {
+        c = cm;
     }
 
     private void drawNoon(Graphics g) {
