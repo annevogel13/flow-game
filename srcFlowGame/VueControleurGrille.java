@@ -46,8 +46,8 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                         System.out.println("mousePressed : " + e.getSource());
                         System.out.println("mousePressed on case : " + ci +" , "+cj);
+                        //jeu.construireChemin(ci,cj);
 
-                        // enregistrement du chemin
 
                     }
 
