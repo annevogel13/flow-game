@@ -47,7 +47,7 @@ public class Jeux extends Observable {
              break;
 
              case empty:
-                 if(ajouteCaseModelChemin()){
+                 if(ajouteCaseModelChemin(x,y)){
                      System.out.println("case ajoute aux chemin");
                  }else System.out.println("on n'a pas le droit"); // doit arrêter le desin de chemin
 
@@ -67,9 +67,30 @@ public class Jeux extends Observable {
      * en regardent le derniere case du cheminCourante
      * @return vrai si on peut, faux sinon
      */
-    public boolean ajouteCaseModelChemin(){
+    public boolean ajouteCaseModelChemin(int x, int y){
 
-        return true;
+        // cherche le premiere case libre
+        int derniereCase = 0 ;
+
+        do{
+           derniereCase++;
+        }while(cheminCourante[derniereCase][0] != -1);
+
+        // verifier si on a le droit de aller aux pas prochaine
+        // droit a soit x + 1 OU y + 1 PAS LES DEUX --> diagonale
+        /*
+               example si le derniere case est 0,0 on peut aller a
+               + 0 , 1
+               + 1 , 0
+         */
+
+        if(( cheminCourante[derniereCase-1][0] + 1 == x ) || ( cheminCourante[derniereCase-1][1] + 1 == x )){
+            cheminCourante[derniereCase][0] = x ;
+            cheminCourante[derniereCase][1] = y ;
+            System.out.println("cheminCourante mis a jour");
+            return true;
+        }else System.out.println("cheminCourante detruire"); return false;
+
     }
 
     public void initCaseModelChemin(int longeurChemin){
