@@ -1,0 +1,67 @@
+5 1 5
+R v V j J
+r v B j O
+r v b j o
+r V b J o
+r R B O o
+
+5 2 4
+J j j j j
+b b b b j
+b v V b j
+B V R b J
+R r r b B
+
+5 3 5
+j J B V v
+j b b R v
+j b R r v
+J b o O v
+B b O V v
+
+6 1 5
+r r r r r r
+R B b V v r
+j J b b v r
+j O o b v R
+j J o b V B
+O o o b b b
+
+7 1 6
+b b b b b b B
+b o o o o O R
+b O r r r r r
+b r r V T t t
+b r V v J j t
+b r r r R J t
+b b b b b B T
+
+7 2 7
+f F R r r r r
+f o O B b B r
+f o V v v v r
+f o T J j V r
+f o t t J T r
+f o O t t t r
+f f F R r r r
+
+8 1 6
+r r r r R j j j
+r t t t T j V J
+r t v v V J v T
+r t v O B b v t
+r t v o O b v t
+r t t v v v v t
+r R t t t t t t
+
+
+9 1 9
+j j j j j j j j j
+j R T B b b b b j
+j r t T O o O B j
+j r r r r f f F j
+j V v V R f j j j
+J F f f f f j Z Y
+y Y J j j j j z y
+y Z z z z z z z y
+y y y y y y y y y

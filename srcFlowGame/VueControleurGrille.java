@@ -75,7 +75,7 @@ public class VueControleurGrille extends JFrame implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        //a faire
+
 
         for (int i = 0; i < tabCV.length; i++) {
             for (int j = 0; j < tabCV.length; j++) {
