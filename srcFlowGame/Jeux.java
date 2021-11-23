@@ -3,7 +3,7 @@ import java.util.Observable;
 public class Jeux extends Observable {
     public int size;
     public CaseModele tab_jeu[][];
-   // public int [] cheminCourante[]; // pour stocker le chemin courante // misschien
+    public int [][] cheminCourante; // pour stocker le chemin courante // misschien
 
 
     public Jeux (int size){
@@ -14,8 +14,9 @@ public class Jeux extends Observable {
             for (int j = 0; j < size; j++) {
                 tab_jeu[i][j] = new CaseModele();
             }
-
         }
+
+        initCaseModelChemin(10);
 
     }
 
@@ -27,6 +28,8 @@ public class Jeux extends Observable {
 
     public void construireChemin(int x, int y){
          CaseType cm = this.tab_jeu[x][y].type;
+         int[][] chemin;
+
 
         // verifier si une case est une case vide? --> type empty
         // verifier si on croise pas? --> type h...
@@ -38,30 +41,38 @@ public class Jeux extends Observable {
              case S3:
              case S4:
              case S5:
-                    initCaseModelChemin();
-                 break;
+                    // si le debut
+                    //initCaseModelChemin();
+                    // si deja initialiser
+                    //Chemin.check_chemin();
+             break;
 
              case empty:
                  ajouteCaseModelChemin();
                  System.out.println("case ajoute aux chemin");
                  break;
+
              // le reste des options h0h1, v0v1, cross, h0v0, h0v1, h1v0, h1v1
              default:
                  System.out.println("case déjà rempli --> croisement");
                  break;
 
-
-
          }
-
-
 
     }
 
     // reste a faire
     public void ajouteCaseModelChemin(){}
 
-    public void initCaseModelChemin(){}
+    public void initCaseModelChemin(int longeurChemin){
+        // chemin (max longeur 10) avec le 2 pour stocker le case
+        this.cheminCourante = new int[longeurChemin][2];
+        // initalise avec -1
+        for (int i = 0; i < longeurChemin; i++) {
+            cheminCourante[i][0] = -1;
+            cheminCourante[i][1] = -1;
+        }
+    }
 
 
 }

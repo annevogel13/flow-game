@@ -49,7 +49,6 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                         // enregistrement du chemin
 
-
                     }
 
                     @Override
