@@ -14,4 +14,13 @@ public class Chemin {
     public void recup_info_puzzle(){
         
     }
+
+    /**
+     * fonction qui verifie que le chemin en parametre est correcte
+     * renvoie vrai si chemin correcte, false sinon.
+     */
+    public boolean check_chemin(Chemin C){
+        // a completer
+        return true;
+    }
 }

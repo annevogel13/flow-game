@@ -36,14 +36,19 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                 hashmap.put(tabCV[i][j], new Point(j, i));
 
+
                 tabCV[i][j].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
                         //Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
 
-                        jeu.rnd(ci, cj);
-                        //((VueCase) e.getSource()).rndType();
+                        jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
+
                         System.out.println("mousePressed : " + e.getSource());
+                        System.out.println("mousePressed on case : " + ci +" , "+cj);
+
+                        // enregistrement du chemin
+
 
                     }
 
@@ -52,14 +57,17 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // (**) - voir commentaire currentComponent
                         currentComponent = (JComponent) e.getSource();
                         System.out.println("mouseEntered : " + e.getSource());
+                        System.out.println("mouseEntered in case : " + ci +" , "+cj);
+                        // doesn't work, always returns 0 0
                     }
-
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
                         System.out.println("mouseReleased : " + currentComponent);
                     }
+
+
                 });
 
 
