@@ -39,17 +39,19 @@ public class Jeux extends Observable {
              case S3:
              case S4:
              case S5:
-                    // debut d'une chemin
+/*                    // debut d'une chemin
                     if(cheminCourante[0][0] == -1 && cheminCourante[0][1] == -1){ // donc debut de chemin (premiere pas)
                         cheminCourante[0][0] = x;
                         cheminCourante[0][1] = y;
+                        System.out.println("start chemin");
                     }
              break;
-
+*/
              case empty:
-                 if(ajouteCaseModelChemin(x,y)){
-                     System.out.println("case ajoute aux chemin");
-                 }else System.out.println("on n'a pas le droit"); // doit arrêter le desin de chemin
+                 ajouteCaseModelChemin(x,y);
+               //  if(ajouteCaseModelChemin(x,y)){
+                 //    System.out.println("case ajoute aux chemin");
+                // }else System.out.println("on n'a pas le droit"); // doit arrêter le desin de chemin
 
                  break;
 
@@ -84,15 +86,22 @@ public class Jeux extends Observable {
                + 1 , 0
          */
 
-        if(( cheminCourante[derniereCase-1][0] + 1 == x ) || ( cheminCourante[derniereCase-1][1] + 1 == x )){
+        if((( cheminCourante[derniereCase-1][0] + 1 == x ) || ( cheminCourante[derniereCase-1][1] + 1 == x )) &&
+        (( cheminCourante[derniereCase-1][0] - 1 == x ) || ( cheminCourante[derniereCase-1][1] - 1 == x ))){
             cheminCourante[derniereCase][0] = x ;
             cheminCourante[derniereCase][1] = y ;
             System.out.println("cheminCourante mis a jour");
             return true;
         }else System.out.println("cheminCourante detruire"); return false;
 
+
     }
 
+    /**
+     * methode qui initialise le cheminCourante
+     * (peut aussi être utilise pour
+     * @param longeurChemin
+     */
     public void initCaseModelChemin(int longeurChemin){
         // chemin (max longeur 10) avec le 2 pour stocker le case
         this.cheminCourante = new int[longeurChemin][2];
@@ -101,6 +110,19 @@ public class Jeux extends Observable {
             cheminCourante[i][0] = -1;
             cheminCourante[i][1] = -1;
         }
+    }
+
+    /**
+     * methode qui aide avec le debuggage
+     * @param longeurChemin : le longeur du cheminCourante
+     */
+    public void afficherCheminCourante(int longeurChemin){
+        System.out.print("{");
+        for (int i = 0; i < longeurChemin; i++) {
+            System.out.print("{"+cheminCourante[i][0]+","+cheminCourante[i][1]+"}");
+        }
+        System.out.print("}");
+
     }
 
 

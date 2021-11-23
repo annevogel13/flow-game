@@ -42,12 +42,12 @@ public class VueControleurGrille extends JFrame implements Observer{
                     public void mousePressed(MouseEvent e) {
                         //Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
 
-                        jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
+                        // rnd en commentaire autrement je peut pas tester le chemin
+                        //jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
 
                         System.out.println("mousePressed : " + e.getSource());
                         System.out.println("mousePressed on case : " + ci +" , "+cj);
-                        //jeu.construireChemin(ci,cj);
-
+                        jeu.construireChemin(ci,cj);
 
                     }
 
@@ -58,12 +58,23 @@ public class VueControleurGrille extends JFrame implements Observer{
                         System.out.println("mouseEntered : " + e.getSource());
                         System.out.println("mouseEntered in case : " + ci +" , "+cj);
                         // doesn't work, always returns 0 0
+
+                        jeu.construireChemin(ci,cj);
+
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
                         System.out.println("mouseReleased : " + currentComponent);
+
+                        jeu.construireChemin(ci,cj);
+                        // afficher le chemin
+                        jeu.afficherCheminCourante(10);
+                        // detruire le chemin
+                        jeu.initCaseModelChemin(10);
+                        // chemin check <-- si bien on peut dessiner
+
                     }
 
 
