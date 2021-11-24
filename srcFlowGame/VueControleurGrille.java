@@ -56,10 +56,11 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // (**) - voir commentaire currentComponent
                         currentComponent = (JComponent) e.getSource();
                         System.out.println("mouseEntered : " + e.getSource());
-                        System.out.println("mouseEntered in case : " + ci +" , "+cj);
                         // doesn't work, always returns 0 0
 
-                        jeu.construireChemin(ci,cj);
+                        System.out.println("mouseEntered in case : " + ci +" , "+cj);
+                        //TODO mousepressed + entered
+                        //jeu.construireChemin(ci,cj);
 
                     }
 
@@ -71,15 +72,15 @@ public class VueControleurGrille extends JFrame implements Observer{
                         jeu.construireChemin(ci,cj);
                         // afficher le chemin
                         jeu.afficherCheminCourante(10);
-                        // detruire le chemin
+
+                        // TODO chemin check
+                        // detruire le chemin (par une nouveau init)
                         jeu.initCaseModelChemin(10);
-                        // chemin check <-- si bien on peut dessiner
+                        System.out.println("cheminCourante detruit");
 
                     }
 
-
                 });
-
 
             }
         }
