@@ -95,8 +95,8 @@ public class Chemin {
 
     /**
      * methode qui verifie si le debut et fin sont le même S_
-     * @param cm
-     * @return
+     * @param cm : CaseModele du case que on veut ajouter (seulement interesse dans les CaseType.Empty)
+     * @return vrai si cm.type c'est le meme S_ que le debut de chemin
      */
     public boolean checkDebutFin(CaseModele cm){
         System.out.println("Fin type "+cm.type);
@@ -112,13 +112,18 @@ public class Chemin {
         if(cm.type != CaseType.empty){
             ajouteCase(cm);
         }
+
+
     }
 
     // midden
     public void chemin2(CaseModele cm){
         System.out.println(cm.type);
+
         if(chemin_courant[0].type != CaseType.empty){
             if(cm.type == CaseType.empty){
+                ajouteCase(cm);
+            }else if(checkDebutFin(cm)) {
                 ajouteCase(cm);
             }
         }

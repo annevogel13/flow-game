@@ -71,17 +71,16 @@ public class VueControleurGrille extends JFrame implements Observer{
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
-                        System.out.println("mouseReleased : " + currentComponent); // 0 1 eind
-                        System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent); // 1 0 begin
 
-                        jeu.chemin.chemin1(jeu.tab_jeu[ci][cj]);
+                        System.out.println("mouseReleased : " + currentComponent);
+                        System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
+
                         // afficher le chemin
                         jeu.chemin.afficherChemin();
 
                         // TODO chemin check
                         // detruire le chemin (par une nouveau init)
                         jeu.chemin = new Chemin();
-
                         jeu.chemin.afficherChemin();
 
                     }

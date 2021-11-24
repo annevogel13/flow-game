@@ -218,34 +218,16 @@ public class Jeux extends Observable {
                 }else{
                     String s = new String();
                     s = tab_joueur[i][j];
-                    switch (s){
-                        case "R" :
-                            tab_jeu[i][j].type= CaseType.S1;
-                            break;
-                        case "V" :
-                            tab_jeu[i][j].type= CaseType.S2;
-                            break;
-                        case "B" :
-                            tab_jeu[i][j].type= CaseType.S3;
-                            break;
-                        case "J" :
-                            tab_jeu[i][j].type= CaseType.S4;
-                            break;
-                        case "O" :
-                            tab_jeu[i][j].type= CaseType.S5;
-                            break;
-                        case "T" :
-                            tab_jeu[i][j].type= CaseType.S6;
-                            break;
-                        case "F" :
-                            tab_jeu[i][j].type= CaseType.S7;
-                            break;
-                        case "Y" :
-                            tab_jeu[i][j].type= CaseType.S8;
-                            break;
-                        case "Z" :
-                            tab_jeu[i][j].type= CaseType.S9;
-                            break;
+                    switch (s) {
+                        case "R" -> tab_jeu[i][j].type = CaseType.S1;
+                        case "V" -> tab_jeu[i][j].type = CaseType.S2;
+                        case "B" -> tab_jeu[i][j].type = CaseType.S3;
+                        case "J" -> tab_jeu[i][j].type = CaseType.S4;
+                        case "O" -> tab_jeu[i][j].type = CaseType.S5;
+                        case "T" -> tab_jeu[i][j].type = CaseType.S6;
+                        case "F" -> tab_jeu[i][j].type = CaseType.S7;
+                        case "Y" -> tab_jeu[i][j].type = CaseType.S8;
+                        case "Z" -> tab_jeu[i][j].type = CaseType.S9;
                     }
 
                 }
