@@ -46,34 +46,41 @@ public class Jeux extends Observable {
         notifyObservers();
     }
 
-    public void construireChemin(int x, int y){
-         CaseType cm = this.tab_jeu[x][y].type;
+    public void construireChemin(CaseModele cm){
+         CaseType cmType = cm.type;
 
         // verifier si une case est une case vide? --> type empty
         // verifier si on croise pas? --> type h...
         // verifier si une case est le fin ? --> exacte le meme type que le debut --> type S_
-         switch(cm){
+         switch(cmType){
              // etats debut/finaux
              case S1:
              case S2:
              case S3:
              case S4:
              case S5:
-                   // debut d'une chemin
-                 // TODO verifier si c'est le debut ou le fin d'une chemin
-                    System.out.println(chemin.chemin_courant[0].type);
-                    if(chemin.chemin_courant[0].type == null){ // donc debut de chemin (premiere pas)
+             case S6:
+             case S7:
+             case S8:
+             case S9:
+                    // debut d'une chemin
+                    // TODO verifier si c'est le debut ou le fin d'une chemin
 
-                        chemin.chemin_courant[0].x = x;
-                        chemin.chemin_courant[0].y = y;
-                        System.out.println("start chemin a partir de "+cm);
-                    }else{
-                        ajouteCaseModelChemin(x,y);
+                    if((chemin.chemin_courant[0].type == null)&& chemin.mousepressed){ // donc debut de chemin (premiere pas)
+
+                        chemin.ajouteCase(cm);
+                        System.out.println("start chemin a partir de "+cmType);
+
+                    }else if(chemin.checkDebutFin(cm)){
+                        chemin.ajouteCase(cm);
+                        System.out.println("fin de chemin "+cmType);
                     }
+
+
              break;
 
              case empty:
-                    ajouteCaseModelChemin(x,y);
+                 chemin.ajouteCase(cm);
                  break;
 
              // le reste des options h0h1, v0v1, cross, h0v0, h0v1, h1v0, h1v1
@@ -89,38 +96,6 @@ public class Jeux extends Observable {
          }
     }
 
-    /**
-     * methode qui verifie si on le droit de passer a le case suivante
-     * en regardent le derniere case du cheminCourante
-     * @return vrai si on peut, faux sinon
-     */
-    public boolean ajouteCaseModelChemin(int x, int y){
-
-        // cherche le derniere case rempli
-        int derniereCaseRempli = chemin.taille_chemin_courant;
-
-        chemin.chemin_courant[derniereCaseRempli].x = x;
-        chemin.chemin_courant[derniereCaseRempli].y = y;
-        chemin.taille_chemin_courant =+1 ;
-        // TODO verifier si on a le droit de aller aux pas prochaine
-
-        return true;
-
-    }
-
-
-    /**
-     * methode qui aide avec le debuggage
-     * @param longeurChemin : le longeur du cheminCourante
-     */
-    public void afficherChemin(int longeurChemin){
-        System.out.print("{");
-        for (int i = 0; i < longeurChemin; i++) {
-            System.out.print("{"+chemin.chemin_courant[i].x+","+chemin.chemin_courant[i].y+"}");
-        }
-        System.out.print("}");
-
-    }
 
     public void lire_fichier_texte(String s) throws IOException {
 

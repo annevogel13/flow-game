@@ -45,10 +45,10 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                         // rnd en commentaire autrement je peut pas tester le chemin
                         //jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
-
+                        //jeu.chemin.mousepressed = true;
                         System.out.println("mousePressed : " + e.getSource());
-                        jeu.construireChemin(ci,cj);
-
+                        //jeu.construireChemin(jeu.tab_jeu[ci][cj]);
+                        jeu.chemin.chemin1(jeu.tab_jeu[ci][cj]);
                     }
 
                     @Override
@@ -58,23 +58,30 @@ public class VueControleurGrille extends JFrame implements Observer{
                         System.out.println("mouseEntered : " + e.getSource());
 
                         //TODO mousepressed + entered
-                        jeu.construireChemin(ci,cj);
+
+                            //jeu.construireChemin(jeu.tab_jeu[ci][cj]);
+                            jeu.chemin.chemin2(jeu.tab_jeu[ci][cj]);
+
+
+
+
 
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
-                        System.out.println("mouseReleased : " + currentComponent);
+                        System.out.println("mouseReleased : " + currentComponent); // 0 1 eind
+                        System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent); // 1 0 begin
 
-                        jeu.construireChemin(ci,cj);
+                        jeu.chemin.chemin1(jeu.tab_jeu[ci][cj]);
                         // afficher le chemin
                         jeu.chemin.afficherChemin();
 
                         // TODO chemin check
                         // detruire le chemin (par une nouveau init)
                         jeu.chemin = new Chemin();
-                        System.out.println("");
+
                         jeu.chemin.afficherChemin();
 
                     }

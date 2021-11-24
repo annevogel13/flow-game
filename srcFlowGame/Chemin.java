@@ -5,10 +5,12 @@ public class Chemin {
     CaseModele[] chemin_courant;
     int taille_chemin_courant;
     int TAILLE_MAX = 10;
+    boolean mousepressed  ;
 
     public Chemin() {
         chemin_courant = new CaseModele[TAILLE_MAX];
         taille_chemin_courant = 0;
+        mousepressed = false;
         for(int i = 0; i < TAILLE_MAX; i++){
 
             chemin_courant[i] = new CaseModele(0,0);
@@ -32,7 +34,7 @@ public class Chemin {
         tab_case_voisine[3]= new CaseModele(c.x + 0,  c.y - 1); //gauche
 
         // droite = 1, gauche = -1, haut = 2, bas = -2
-        if((compare_deux_cases(tab_case_voisine[0], c_suivante)){
+        if(compare_deux_cases(tab_case_voisine[0], c_suivante)){
             c.direction_case_suivante = 2;
             return true;
         }
@@ -76,6 +78,50 @@ public class Chemin {
             System.out.print("{"+ chemin_courant[i].x+"," + chemin_courant[i].y+"}");
         }
         System.out.print("} \n");
+
+    }
+
+    /**
+     * ajout une caseModele au chemin
+     * @param cm : le case a ajouter
+     */
+    public void ajouteCase(CaseModele cm) {
+
+            chemin_courant[taille_chemin_courant] = cm;
+            taille_chemin_courant = taille_chemin_courant + 1;
+            System.out.println("case ajoute: " + cm.x + " " + cm.y);
+
+    }
+
+    /**
+     * methode qui verifie si le debut et fin sont le même S_
+     * @param cm
+     * @return
+     */
+    public boolean checkDebutFin(CaseModele cm){
+        System.out.println("Fin type "+cm.type);
+        if(cm.type == chemin_courant[0].type){
+            System.out.println("Debut Fin couple");
+            return true;
+        }else return false;
+    }
+
+    // begin eind
+    public void chemin1(CaseModele cm){
+        System.out.println(cm.type);
+        if(cm.type != CaseType.empty){
+            ajouteCase(cm);
+        }
+    }
+
+    // midden
+    public void chemin2(CaseModele cm){
+        System.out.println(cm.type);
+        if(chemin_courant[0].type != CaseType.empty){
+            if(cm.type == CaseType.empty){
+                ajouteCase(cm);
+            }
+        }
 
     }
 

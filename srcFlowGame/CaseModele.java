@@ -8,6 +8,7 @@ public class CaseModele {
     public CaseModele(int _i, int _j){
         x = _i;
         y = _j;
+        type = CaseType.empty;
         //rndType();
        // System.out.println("new rnd type casemodele");
     }
