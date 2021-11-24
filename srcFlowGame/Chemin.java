@@ -10,22 +10,24 @@ public class Chemin {
         chemin_courant = new CaseModele[TAILLE_MAX];
         for(int i = 0; i < TAILLE_MAX; i++){
 
-            chemin_courant[i] = new CaseModele();
+            chemin_courant[i] = new CaseModele(0,0);
         }
     }
-/*
-    public boolean verif_case_voisine(){
+
+    public boolean verif_case_voisine(CaseModele c){
         CaseModele[] tab_case_voisine = new CaseModele[4];
-        tab_case_voisine[0].
+        for(int i = 0; i < 4; i++){
+            tab_case_voisine[0]= calcule_coord_p_ou_m_un(1, 1, c);
+        }
+
         for(int i = 0; i < taille_chemin_courant; i++){
 
         }
     }
 
-    public void calcule_coord_p_ou_m_un(int _x, int _y, CaseModele c){
-        CaseModele c2 = new CaseModele();
-        c.x = c.x + _x;
-        c.y = c.y + _y;
+    public CaseModele calcule_coord_p_ou_m_un(int _x, int _y, CaseModele c){
+        CaseModele c2 = new CaseModele(c.x + _x,  c.y + _y);
+        return c2;
     }
 
     public boolean dedans_grille(CaseModele c){
@@ -36,5 +38,17 @@ public class Chemin {
             return true;
         }
     }
-*/
+
+    /**
+     * methode qui aide avec le debuggage
+     */
+    public void afficherChemin(){
+        System.out.print("{");
+        for (int i = 0; i < TAILLE_MAX; i++) {
+            System.out.print("{"+ chemin_courant[i].x+"," + chemin_courant[i].y+"}");
+        }
+        System.out.print("}");
+
+    }
+
 }
