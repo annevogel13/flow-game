@@ -13,7 +13,7 @@ public class Chemin {
             chemin_courant[i] = new CaseModele(0,0);
         }
     }
-
+/*
     public boolean verif_case_voisine(CaseModele c){
         CaseModele[] tab_case_voisine = new CaseModele[4];
         for(int i = 0; i < 4; i++){
@@ -38,6 +38,8 @@ public class Chemin {
             return true;
         }
     }
+    */
+ 
 
     /**
      * methode qui aide avec le debuggage
