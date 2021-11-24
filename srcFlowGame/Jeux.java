@@ -61,10 +61,12 @@ public class Jeux extends Observable {
              case S5:
                    // debut d'une chemin
                  // TODO verifier si c'est le debut ou le fin d'une chemin
-                    if(chemin.chemin_courant[0].type == CaseType.empty){ // donc debut de chemin (premiere pas)
+                    System.out.println(chemin.chemin_courant[0].type);
+                    if(chemin.chemin_courant[0].type == null){ // donc debut de chemin (premiere pas)
+
                         chemin.chemin_courant[0].x = x;
                         chemin.chemin_courant[0].y = y;
-                        System.out.println("start chemin");
+                        System.out.println("start chemin a partir de "+cm);
                     }else{
                         ajouteCaseModelChemin(x,y);
                     }
@@ -95,17 +97,11 @@ public class Jeux extends Observable {
     public boolean ajouteCaseModelChemin(int x, int y){
 
         // cherche le derniere case rempli
-        int derniereCaseRempli = 0 ;
+        int derniereCaseRempli = chemin.taille_chemin_courant;
 
-        for (int i = 0; i < chemin.TAILLE_MAX; i++) {
-           if(chemin.chemin_courant[0] != null){ // checken of dit uberhaupt werkt
-               derniereCaseRempli = i;
-           }
-        }
-
-        chemin.chemin_courant[derniereCaseRempli+1].x = x;
-        chemin.chemin_courant[derniereCaseRempli+1].y = y;
-
+        chemin.chemin_courant[derniereCaseRempli].x = x;
+        chemin.chemin_courant[derniereCaseRempli].y = y;
+        chemin.taille_chemin_courant =+1 ;
         // TODO verifier si on a le droit de aller aux pas prochaine
 
         return true;
