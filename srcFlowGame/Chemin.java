@@ -13,7 +13,7 @@ public class Chemin {
             chemin_courant[i] = new CaseModele();
         }
     }
-
+/*
     public boolean verif_case_voisine(){
         CaseModele[] tab_case_voisine = new CaseModele[4];
         tab_case_voisine[0].
@@ -36,5 +36,5 @@ public class Chemin {
             return true;
         }
     }
-
+*/
 }
