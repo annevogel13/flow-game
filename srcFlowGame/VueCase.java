@@ -91,7 +91,7 @@ public class VueCase extends JPanel {
         }
     }
     public String toString() {
-        return c.x + ", " + c.y;
+        return c.x + ",/ " + c.y;
 
     }
 

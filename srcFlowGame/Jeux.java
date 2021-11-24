@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Jeux extends Observable {
     public int size;
     public CaseModele [][] tab_jeu;
-    public int [][] cheminCourante; // pour stocker le chemin courante // misschien
+    public Chemin chemin ;//public int [][] cheminCourante; // pour stocker le chemin courante // misschien
     public String [][]tab_chemins;
     public String [][]tab_joueur;
     public int niveau;
@@ -31,12 +31,12 @@ public class Jeux extends Observable {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                tab_jeu[i][j] = new CaseModele();
+                tab_jeu[i][j] = new CaseModele(i, j);
             }
         }
 
         init_tab_jeu();
-        //initCaseModelChemin(10);
+        chemin = new Chemin();
 
     }
 
@@ -61,17 +61,17 @@ public class Jeux extends Observable {
              case S5:
                    // debut d'une chemin
                  // TODO verifier si c'est le debut ou le fin d'une chemin
-                    if(cheminCourante[0][0] == -1 && cheminCourante[0][1] == -1){ // donc debut de chemin (premiere pas)
-                        cheminCourante[0][0] = x;
-                        cheminCourante[0][1] = y;
+                    if(chemin.chemin_courant[0].type == CaseType.empty){ // donc debut de chemin (premiere pas)
+                        chemin.chemin_courant[0].x = x;
+                        chemin.chemin_courant[0].y = y;
                         System.out.println("start chemin");
                     }else{
-                        ajouteCaseModelChemin(x,y, true);
+                        ajouteCaseModelChemin(x,y);
                     }
              break;
 
              case empty:
-                 ajouteCaseModelChemin(x,y, false);
+                    ajouteCaseModelChemin(x,y);
                  break;
 
              // le reste des options h0h1, v0v1, cross, h0v0, h0v1, h1v0, h1v1
@@ -92,50 +92,35 @@ public class Jeux extends Observable {
      * en regardent le derniere case du cheminCourante
      * @return vrai si on peut, faux sinon
      */
-    public boolean ajouteCaseModelChemin(int x, int y, boolean fin){
+    public boolean ajouteCaseModelChemin(int x, int y){
 
         // cherche le derniere case rempli
         int derniereCaseRempli = 0 ;
 
-        for (int i = 0; i < 10; i++) {
-           if(cheminCourante[i][0] > -1 ){
+        for (int i = 0; i < chemin.TAILLE_MAX; i++) {
+           if(chemin.chemin_courant[0] != null){ // checken of dit uberhaupt werkt
                derniereCaseRempli = i;
            }
         }
 
-        // TODO verifier si on a le droit de aller aux pas prochaine
+        chemin.chemin_courant[derniereCaseRempli+1].x = x;
+        chemin.chemin_courant[derniereCaseRempli+1].y = y;
 
-        // remplir le prochaine case du cheminCourante
-        cheminCourante[derniereCaseRempli+1][0] = x;
-        cheminCourante[derniereCaseRempli+1][1] = y;
+        // TODO verifier si on a le droit de aller aux pas prochaine
 
         return true;
 
     }
 
-    /**
-     * methode qui initialise le cheminCourante
-     * (peut aussi être utilise pour
-     * @param longeurChemin
-     */
-    public void initCaseModelChemin(int longeurChemin){
-        // chemin (max longeur 10) avec le 2 pour stocker le case "entered"
-        this.cheminCourante = new int[longeurChemin][2];
-        // initalise avec -1
-        for (int i = 0; i < longeurChemin; i++) {
-            cheminCourante[i][0] = -1;
-            cheminCourante[i][1] = -1;
-        }
-    }
 
     /**
      * methode qui aide avec le debuggage
      * @param longeurChemin : le longeur du cheminCourante
      */
-    public void afficherCheminCourante(int longeurChemin){
+    public void afficherChemin(int longeurChemin){
         System.out.print("{");
         for (int i = 0; i < longeurChemin; i++) {
-            System.out.print("{"+cheminCourante[i][0]+","+cheminCourante[i][1]+"}");
+            System.out.print("{"+chemin.chemin_courant[i].x+","+chemin.chemin_courant[i].y+"}");
         }
         System.out.print("}");
 
@@ -144,7 +129,7 @@ public class Jeux extends Observable {
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "../data/grilles.txt";
+        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; //"../data/grilles.txt";
         String ligne;
 
         // lit le fichier ligne par ligne

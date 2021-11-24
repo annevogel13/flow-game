@@ -5,7 +5,9 @@ public class CaseModele {
     private static Random rnd = new Random();
     public int x, y;
 
-    public CaseModele(){
+    public CaseModele(int _i, int _j){
+        x = _i;
+        y = _j;
         //rndType();
        // System.out.println("new rnd type casemodele");
     }
