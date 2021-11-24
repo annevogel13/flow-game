@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -105,8 +106,8 @@ public class VueControleurGrille extends JFrame implements Observer{
 
     }
 
-    public static void main(String[] args) {
-        Jeux jeu = new Jeux(6);
+    public static void main(String[] args) throws IOException {
+        Jeux jeu = new Jeux(6,1);
         VueControleurGrille vue = new VueControleurGrille(jeu);
         jeu.addObserver(vue);
         vue.setVisible(true);

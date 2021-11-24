@@ -6,7 +6,7 @@ public class CaseModele {
     public int x, y;
 
     public CaseModele(){
-        rndType();
+        //rndType();
        // System.out.println("new rnd type casemodele");
     }
 
