@@ -40,7 +40,7 @@ public class VueCase extends JPanel {
 
         Rectangle2D deltaText =  g.getFont().getStringBounds("0", g.getFontMetrics().getFontRenderContext()); // "0" utilisé pour gabarit
 
-
+                //TODO rajoute S6 - S9
         switch(c.type) {
             case S1 :
                 g.drawString("1", getWidth()/2 - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
