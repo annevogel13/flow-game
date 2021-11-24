@@ -3,7 +3,7 @@ import java.util.Random;
 public class CaseModele {
     public CaseType type;
     private static Random rnd = new Random();
-    public int x, y;
+    public int x, y, direction_case_suivante;
 
     public CaseModele(int _i, int _j){
         x = _i;
