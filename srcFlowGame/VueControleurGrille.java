@@ -37,18 +37,14 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                 hashmap.put(tabCV[i][j], new Point(j, i));
 
-
                 tabCV[i][j].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mousePressed(MouseEvent e) {
-                        //Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
+                        // Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
+                        // jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
 
-                        // rnd en commentaire autrement je peut pas tester le chemin
-                        //jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
-                        //jeu.chemin.mousepressed = true;
                         System.out.println("mousePressed : " + e.getSource());
-                        //jeu.construireChemin(jeu.tab_jeu[ci][cj]);
-                        jeu.chemin.chemin1(jeu.tab_jeu[ci][cj]);
+                        jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
                     }
 
                     @Override
@@ -57,31 +53,19 @@ public class VueControleurGrille extends JFrame implements Observer{
                         currentComponent = (JComponent) e.getSource();
                         System.out.println("mouseEntered : " + e.getSource());
 
-                        //TODO mousepressed + entered
-
-                            //jeu.construireChemin(jeu.tab_jeu[ci][cj]);
-                            jeu.chemin.chemin2(jeu.tab_jeu[ci][cj]);
-
-
-
-
+                        jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
 
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
-
                         System.out.println("mouseReleased : " + currentComponent);
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
 
-                        // afficher le chemin
+                        // afficher le chemin construit, et aprés on le detruit
                         jeu.chemin.afficherChemin();
-
-                        // TODO chemin check
-                        // detruire le chemin (par une nouveau init)
                         jeu.chemin = new Chemin();
-                        jeu.chemin.afficherChemin();
 
                     }
 
@@ -94,12 +78,8 @@ public class VueControleurGrille extends JFrame implements Observer{
 
     }
 
-
-
-
     @Override
     public void update(Observable o, Object arg) {
-
 
         for (int i = 0; i < tabCV.length; i++) {
             for (int j = 0; j < tabCV.length; j++) {
@@ -107,7 +87,6 @@ public class VueControleurGrille extends JFrame implements Observer{
                 tabCV[i][j].repaint();
             }
         }
-
     }
 
     public static void main(String[] args) throws IOException {

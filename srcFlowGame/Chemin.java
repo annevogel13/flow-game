@@ -13,7 +13,7 @@ public class Chemin {
         mousepressed = false;
         for(int i = 0; i < TAILLE_MAX; i++){
 
-            chemin_courant[i] = new CaseModele(0,0);
+            chemin_courant[i] = new CaseModele(-1,-1);
         }
     }
 
@@ -86,48 +86,47 @@ public class Chemin {
      * @param cm : le case a ajouter
      */
     public void ajouteCase(CaseModele cm) {
-
-            chemin_courant[taille_chemin_courant] = cm;
-            taille_chemin_courant = taille_chemin_courant + 1;
-            System.out.println("case ajoute: " + cm.x + " " + cm.y);
+        // TODO verifier si cm est une voisin authorisée par rapport à le case d'avant
+        chemin_courant[taille_chemin_courant] = cm;
+        taille_chemin_courant = taille_chemin_courant + 1;
+        //System.out.println("case ajoute: " + cm.x + " " + cm.y);
 
     }
 
     /**
-     * methode qui verifie si le debut et fin sont le même S_
-     * @param cm : CaseModele du case que on veut ajouter (seulement interesse dans les CaseType.Empty)
-     * @return vrai si cm.type c'est le meme S_ que le debut de chemin
+     * methode qui commence le chemin, par mettre le casemodele de type S_ dans le chemin_courante
+     * @param cm : le caseModele a ajouter dans le chemin_courante (place 0)
      */
-    public boolean checkDebutFin(CaseModele cm){
-        System.out.println("Fin type "+cm.type);
-        if(cm.type == chemin_courant[0].type){
-            System.out.println("Debut Fin couple");
-            return true;
-        }else return false;
-    }
-
-    // begin eind
-    public void chemin1(CaseModele cm){
-        System.out.println(cm.type);
+    public void cheminStart(CaseModele cm){
+        // si le type n'est pas vide --> du coup ça serait une type S_
+        // et on peut ajoute le case en chemin_courante
         if(cm.type != CaseType.empty){
             ajouteCase(cm);
         }
-
-
     }
 
-    // midden
-    public void chemin2(CaseModele cm){
-        System.out.println(cm.type);
-
+    /**
+     * methode qui remplit le chemin_courante avec des caseModeles passé en parametre
+     * et qui ajoute le derniere element si le cm.type est de type S_
+     * @param cm : le caseModele a ajouter dans le chemin_courante (place taille_chemin_courant+1 )
+     */
+    public void cheminReste(CaseModele cm){
+        // verifier si le chemin a commence sur une type S_ (le premiere case de tableaux remplit
         if(chemin_courant[0].type != CaseType.empty){
+
+            // verifier si le case vide, et peut du coup faire partie d'une chemin
             if(cm.type == CaseType.empty){
+
                 ajouteCase(cm);
-            }else if(checkDebutFin(cm)) {
-                ajouteCase(cm);
+
+            }else {
+                // verifier si cm est le fin d'un chemin
+                if (cm.type == chemin_courant[0].type) {
+                    System.out.println("(Debut, Fin) de " + cm.type);
+                    ajouteCase(cm);
+                }
             }
         }
-
     }
 
 }

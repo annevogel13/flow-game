@@ -46,57 +46,6 @@ public class Jeux extends Observable {
         notifyObservers();
     }
 
-    public void construireChemin(CaseModele cm){
-         CaseType cmType = cm.type;
-
-        // verifier si une case est une case vide? --> type empty
-        // verifier si on croise pas? --> type h...
-        // verifier si une case est le fin ? --> exacte le meme type que le debut --> type S_
-         switch(cmType){
-             // etats debut/finaux
-             case S1:
-             case S2:
-             case S3:
-             case S4:
-             case S5:
-             case S6:
-             case S7:
-             case S8:
-             case S9:
-                    // debut d'une chemin
-                    // TODO verifier si c'est le debut ou le fin d'une chemin
-
-                    if((chemin.chemin_courant[0].type == null)&& chemin.mousepressed){ // donc debut de chemin (premiere pas)
-
-                        chemin.ajouteCase(cm);
-                        System.out.println("start chemin a partir de "+cmType);
-
-                    }else if(chemin.checkDebutFin(cm)){
-                        chemin.ajouteCase(cm);
-                        System.out.println("fin de chemin "+cmType);
-                    }
-
-
-             break;
-
-             case empty:
-                 chemin.ajouteCase(cm);
-                 break;
-
-             // le reste des options h0h1, v0v1, cross, h0v0, h0v1, h1v0, h1v1
-             case cross:
-             case v0v1:
-             case h1v1:
-             case h1v0:
-             case h0v1:
-             case h0v0:
-             case h0h1:
-                 System.out.println("case déjà rempli");
-                 break;
-         }
-    }
-
-
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
@@ -235,6 +184,5 @@ public class Jeux extends Observable {
             }
         }
     }
-
 
 }

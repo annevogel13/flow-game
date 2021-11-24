@@ -8,8 +8,8 @@ public class CaseModele {
     public CaseModele(int _i, int _j){
         x = _i;
         y = _j;
-        type = CaseType.empty;
-        //rndType();
+        type = CaseType.empty; // @p1905073 j'ai ajoute ça pour faire fonctionner les chemins
+        // rndType();
        // System.out.println("new rnd type casemodele");
     }
 
