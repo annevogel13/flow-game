@@ -5,7 +5,10 @@ import java.util.Scanner;
 public class Jeux extends Observable {
     public int size;
     public CaseModele [][] tab_jeu;
-    public Chemin chemin ;//public int [][] cheminCourante; // pour stocker le chemin courante // misschien
+    public Chemin chemin ;
+    public int MAX_CHEMIN = 9;
+    public int nombre_chemin;
+    public Chemin [] tab_chemin;
     public String [][]tab_chemins;
     public String [][]tab_joueur;
     public int niveau;
@@ -16,6 +19,13 @@ public class Jeux extends Observable {
     public Jeux (int size, int _niveau) throws IOException {
         this.niveau = _niveau;
         this.size = size;
+        this.nombre_chemin = 0;
+
+        tab_chemin = new Chemin[MAX_CHEMIN];
+        for(int i = 0; i< MAX_CHEMIN; i++){
+            tab_chemin[i] = new Chemin();
+        }
+
 
         String str_niveau = new String();
         String str_dimension = new String();
@@ -46,10 +56,85 @@ public class Jeux extends Observable {
         notifyObservers();
     }
 
+
+    public void construireChemin(int x, int y){
+         CaseType cm = this.tab_jeu[x][y].type;
+         //on vérifie que la première case soit une forme
+        if(chemin.chemin_courant[0].type==CaseType.empty){
+            System.out.print("\n LIGNE 53 \n");
+            if((cm==CaseType.S1)||(cm==CaseType.S2)||(cm==CaseType.S3)||(cm==CaseType.S4)||(cm==CaseType.S5)||(cm==CaseType.S6)||(cm==CaseType.S7)||(cm==CaseType.S8)||(cm==CaseType.S9)){
+                System.out.print("\n LIGNE 55 \n");
+                chemin.chemin_courant[0].x = x;
+                chemin.chemin_courant[0].y = y;
+                chemin.chemin_courant[0].type = cm;
+                chemin.taille_chemin_courant = chemin.taille_chemin_courant +1 ;
+                System.out.print("Premiere case du chemin est " + chemin.chemin_courant[0].type + "\n" );
+            }
+        }
+        else{
+            System.out.print("\n LIGNE 63 \n");
+            if(!(chemin.chemin_courant[0].type==CaseType.empty) && (chemin.chemin_courant[0].x != x) || (chemin.chemin_courant[0].y != y)){
+                System.out.print("\n LIGNE 65 \n");
+                ajouteCaseModelChemin(x, y);
+            }
+            else{
+                System.out.print("\n ==> " + chemin.chemin_courant[0].type + "   " + (chemin.chemin_courant[0].x != x) +" "+ (chemin.chemin_courant[0].y != y) +"\n");
+            }
+        }
+    }
+
+    public void verif_chemin(){
+        boolean bool1;
+        boolean bool2;
+        //1- on vérifie que la première et dernière case soient égales
+        bool1 = chemin.prem_der_egales();
+        //2 - on vérifie que les cases se suivent
+        bool2 = chemin.verif_chemin();
+
+        System.out.print( " ===> "+ bool1 + " " +bool2);
+        //3- on l'ajoute au tableau de chemins trouvés
+        if(bool1 && bool2){
+            tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
+            //System.out.print(" ==> *************"  + tab_chemin[nombre_chemin].chemin_courant[0].x);
+            nombre_chemin += 1;
+
+            chemin = new Chemin();
+        }
+    }
+
+
+    public void ajouteCaseModelChemin(int x, int y){
+        System.out.print("\nLIGNE 117 : taille chemin courant =  " +  chemin.taille_chemin_courant+"\n");
+
+        int derniereCaseRempli = chemin.taille_chemin_courant;
+
+        chemin.chemin_courant[derniereCaseRempli] = tab_jeu[x][y];
+
+        chemin.taille_chemin_courant += 1 ;
+
+
+    }
+
+
+    /**
+     * methode qui aide avec le debuggage
+     */
+    public void afficherChemin(){
+        System.out.print("{" + nombre_chemin);
+        for(int j =0; j < nombre_chemin; j++){
+            for (int i = 0; i < tab_chemin[j].taille_chemin_courant ; i++) { //TODO affichage a changer
+                System.out.print(" TAB "+ j  + " {"+tab_chemin[j-1].chemin_courant[i].x+","+chemin.chemin_courant[i].y+"}");
+            }
+            System.out.print("} \n");
+        }
+
+
+    }
+
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; //"../data/grilles.txt";
+        String fichier = "../data/grilles.txt"; //"C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; //
         String ligne;
 
         // lit le fichier ligne par ligne

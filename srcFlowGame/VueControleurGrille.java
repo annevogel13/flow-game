@@ -19,6 +19,8 @@ public class VueControleurGrille extends JFrame implements Observer{
     // chaque entrée dans un composant - voir (**)
     private JComponent currentComponent;
 
+    public boolean released = false;
+
     public VueControleurGrille(Jeux jeu) {
         int size = jeu.size;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,32 +46,50 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
                         System.out.println("mousePressed : " + e.getSource());
 
+                        released = true;
+                        jeu.construireChemin(ci,cj);
+
+                        // anne
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisCliquer();
-                        jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
+                        //jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
                     }
+
 
                     @Override
                     public void mouseEntered(MouseEvent e) {
-                        // (**) - voir commentaire currentComponent
                         currentComponent = (JComponent) e.getSource();
                         System.out.println("mouseEntered : " + e.getSource());
 
+                        // anne
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisRentreDansCase();
-                        jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
+                        //jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
 
+                        // jade
+                        if(released == true){
+                            System.out.print("DEDANSS");
+                            jeu.construireChemin(ci,cj);
+                        }
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
                         System.out.println("mouseReleased : " + currentComponent);
+                        /*
+                        // Anne
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
 
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisRelacher();
                         // afficher le chemin construit, et aprés on le detruit
                         jeu.chemin.afficherChemin();
                         jeu.chemin = new Chemin();
+                        */
 
+
+                         // jade
+                        released = false;
+                        jeu.verif_chemin();
+                        jeu.afficherChemin();
                     }
 
                 });
