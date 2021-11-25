@@ -4,7 +4,7 @@
 public class Chemin {
     CaseModele[] chemin_courant;
     int taille_chemin_courant;
-    int TAILLE_MAX = 10;
+    int TAILLE_MAX = 50;
 
     public Chemin() {
         chemin_courant = new CaseModele[TAILLE_MAX];
@@ -12,8 +12,10 @@ public class Chemin {
         for(int i = 0; i < TAILLE_MAX; i++){
 
             chemin_courant[i] = new CaseModele(0,0);
+            chemin_courant[i].type = CaseType.empty;
         }
     }
+
 
     public boolean verif_chemin(){
         for(int i = 0; i < taille_chemin_courant-1; i++){
@@ -32,7 +34,7 @@ public class Chemin {
         tab_case_voisine[3]= new CaseModele(c.x + 0,  c.y - 1); //gauche
 
         // droite = 1, gauche = -1, haut = 2, bas = -2
-        if((compare_deux_cases(tab_case_voisine[0], c_suivante)){
+        if((compare_deux_cases(tab_case_voisine[0], c_suivante))){
             c.direction_case_suivante = 2;
             return true;
         }
@@ -49,6 +51,15 @@ public class Chemin {
             return true;
         }
         else{
+            return false;
+        }
+    }
+
+    public boolean prem_der_egales(){
+        System.out.print("\n " + chemin_courant[0].type +  " " + chemin_courant[taille_chemin_courant-1].x + "  " + chemin_courant[taille_chemin_courant-1].y + " " +chemin_courant[taille_chemin_courant-1].type );
+        if(chemin_courant[0].type == chemin_courant[taille_chemin_courant-1].type){
+            return true;
+        }else{
             return false;
         }
     }

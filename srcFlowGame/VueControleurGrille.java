@@ -19,6 +19,8 @@ public class VueControleurGrille extends JFrame implements Observer{
     // chaque entrée dans un composant - voir (**)
     private JComponent currentComponent;
 
+    public boolean released = false;
+
     public VueControleurGrille(Jeux jeu) {
         int size = jeu.size;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,36 +49,30 @@ public class VueControleurGrille extends JFrame implements Observer{
                         //jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
 
                         System.out.println("mousePressed : " + e.getSource());
+                        released = true;
                         jeu.construireChemin(ci,cj);
 
                     }
 
+
                     @Override
                     public void mouseEntered(MouseEvent e) {
-                        // (**) - voir commentaire currentComponent
                         currentComponent = (JComponent) e.getSource();
                         System.out.println("mouseEntered : " + e.getSource());
 
-                        //TODO mousepressed + entered
-                        jeu.construireChemin(ci,cj);
-
+                        if(released == true){
+                            System.out.print("DEDANSS");
+                            jeu.construireChemin(ci,cj);
+                        }
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
                         System.out.println("mouseReleased : " + currentComponent);
-
-                        jeu.construireChemin(ci,cj);
-                        // afficher le chemin
-                        jeu.chemin.afficherChemin();
-
-                        // TODO chemin check
-                        // detruire le chemin (par une nouveau init)
-                        jeu.chemin = new Chemin();
-                        System.out.println("");
-                        jeu.chemin.afficherChemin();
-
+                        released = false;
+                        jeu.verif_chemin();
+                        jeu.afficherChemin();
                     }
 
                 });
