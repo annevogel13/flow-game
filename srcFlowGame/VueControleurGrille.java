@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -46,12 +47,13 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
                         System.out.println("mousePressed : " + e.getSource());
 
-                        released = true;
-                        jeu.construireChemin(ci,cj);
+                        // jade
+                        // released = true;
+                        //jeu.construireChemin(ci,cj);
 
                         // anne
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisCliquer();
-                        //jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
+                            jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
                     }
 
 
@@ -62,34 +64,41 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                         // anne
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisRentreDansCase();
-                        //jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
+                        jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
 
                         // jade
-                        if(released == true){
-                            System.out.print("DEDANSS");
-                            jeu.construireChemin(ci,cj);
-                        }
+                      //  if(released == true){
+                        //    System.out.print("DEDANSS");
+                         //   jeu.construireChemin(ci,cj);
+                       // }
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
                         System.out.println("mouseReleased : " + currentComponent);
-                        /*
+
                         // Anne
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
 
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisRelacher();
                         // afficher le chemin construit, et aprés on le detruit
                         jeu.chemin.afficherChemin();
-                        jeu.chemin = new Chemin();
-                        */
+                        System.out.println("taille de chemin : "+jeu.chemin.taille_chemin_courant);
 
-
-                         // jade
-                        released = false;
+                        jeu.chemin.afficherCheminTypes();
                         jeu.verif_chemin();
-                        jeu.afficherChemin();
+
+                        // afficher le tableau des chemins
+                        for(int m = 0 ; m < jeu.nombre_chemin ; m++){
+                            jeu.tab_chemin[m].afficherChemin();
+                        }
+
+                         // code jade
+                        //released = false;
+                        //jeu.verif_chemin();
+                        //jeu.chemin.afficherChemin();
+
                     }
 
                 });

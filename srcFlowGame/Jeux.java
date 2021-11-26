@@ -3,18 +3,19 @@ import java.util.Observable;
 import java.util.Scanner;
 
 public class Jeux extends Observable {
+    // Jeu
     public int size;
     public CaseModele [][] tab_jeu;
-    public Chemin chemin ;
-    public int MAX_CHEMIN = 9;
-    public int nombre_chemin;
-    public Chemin [] tab_chemin;
-    public String [][]tab_chemins;
-    public String [][]tab_joueur;
     public int niveau;
     public int nbr_formes;
 
-
+    // Chemin
+    public int MAX_CHEMIN = 9;
+    public int nombre_chemin;
+    public Chemin chemin;
+    public Chemin [] tab_chemin;
+    public String [][]tab_chemins;
+    public String [][]tab_joueur;
 
     public Jeux (int size, int _niveau) throws IOException {
         this.niveau = _niveau;
@@ -25,7 +26,6 @@ public class Jeux extends Observable {
         for(int i = 0; i< MAX_CHEMIN; i++){
             tab_chemin[i] = new Chemin();
         }
-
 
         String str_niveau = new String();
         String str_dimension = new String();
@@ -57,6 +57,7 @@ public class Jeux extends Observable {
     }
 
 
+    // TODO redonant
     public void construireChemin(int x, int y){
          CaseType cm = this.tab_jeu[x][y].type;
          //on vérifie que la première case soit une forme
@@ -102,7 +103,7 @@ public class Jeux extends Observable {
         }
     }
 
-
+    // TODO redonant
     public void ajouteCaseModelChemin(int x, int y){
         System.out.print("\nLIGNE 117 : taille chemin courant =  " +  chemin.taille_chemin_courant+"\n");
 
@@ -115,26 +116,10 @@ public class Jeux extends Observable {
 
     }
 
-
-    /**
-     * methode qui aide avec le debuggage
-     */
-    public void afficherChemin(){
-        System.out.print("{" + nombre_chemin);
-        for(int j =0; j < nombre_chemin; j++){
-            for (int i = 0; i < tab_chemin[j].taille_chemin_courant ; i++) { //TODO affichage a changer
-                System.out.print(" TAB "+ j  + " {"+tab_chemin[j-1].chemin_courant[i].x+","+chemin.chemin_courant[i].y+"}");
-            }
-            System.out.print("} \n");
-        }
-
-
-    }
-
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "../data/grilles.txt"; //"C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; //
+        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; //"../data/grilles.txt";
         String ligne;
 
         // lit le fichier ligne par ligne
@@ -269,5 +254,4 @@ public class Jeux extends Observable {
             }
         }
     }
-
 }

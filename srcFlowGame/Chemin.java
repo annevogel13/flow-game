@@ -18,6 +18,44 @@ public class Chemin {
         }
     }
 
+    public void construireCheminType(CaseModele [][] tab_jeu){
+        System.out.println("change les types du chemin");
+        for(int i = 1; i < taille_chemin_courant -1 ; i++){
+
+            tab_jeu[chemin_courant[i].x][chemin_courant[i].y].type = CaseType.h0v0;
+
+            //troisCaseDeduireType(chemin_courant[i], chemin_courant[i+1], chemin_courant[i+2], tab_jeu);
+        }
+    }
+
+    public void troisCaseDeduireType(CaseModele cm1,CaseModele cm2, CaseModele cm3, CaseModele [][] tab_jeu){
+        System.out.println("change le type d'une case ");
+        /*   h0h1, v0v1, h0v0, h0v1, h1v0, h1v1
+            - horizontaal i blijft hetzelfde j verandert
+            - verticaal j blijft hetzelfde i verandert
+            - |_ 15.00 uur :
+            - _| 09.00 uur :
+            - h0v0
+
+        horizontaal is i
+        verticaal is j
+         */
+
+        if((cm1.x + 1 == cm3.x) || (cm1.x - 1 == cm3.x)){
+            // horizontaal
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
+        }
+
+        if((cm1.y + 1 == cm3.y) || ( cm1.y - 1 == cm3.y)){
+            // verticaal
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1;
+        }
+
+
+        tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
+
+    }
+
 
     public boolean verif_chemin(){
         for(int i = 0; i < taille_chemin_courant-1; i++){
@@ -86,10 +124,21 @@ public class Chemin {
      */
     public void afficherChemin(){
         System.out.print("{");
-        for (int i = 0; i < TAILLE_MAX; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.print("{"+ chemin_courant[i].x+"," + chemin_courant[i].y+"}");
         }
         System.out.print("} \n");
+
+    }
+
+    /**
+     * methode qui aide avec le debuggage
+     */
+    public void afficherCheminTypes(){
+        System.out.println((taille_chemin_courant));
+        for (int i = 0; i < taille_chemin_courant; i++) {
+            System.out.println("type de case "+i+ " est " + chemin_courant[i].type);
+        }
 
     }
 
@@ -99,34 +148,37 @@ public class Chemin {
      */
     public void ajouteCase(CaseModele cm) {
         // TODO verifier si cm est une voisin authorisée par rapport à le case d'avant
-        chemin_courant[taille_chemin_courant] = cm;
+        chemin_courant[taille_chemin_courant].x = cm.x;
+        chemin_courant[taille_chemin_courant].y = cm.y;
+        chemin_courant[taille_chemin_courant].type = cm.type;
+       // System.out.println("type : "+chemin_courant[taille_chemin_courant].type );
         taille_chemin_courant = taille_chemin_courant + 1;
-        //System.out.println("case ajoute: " + cm.x + " " + cm.y);
 
     }
 
     /**
      * methode qui commence le chemin, par mettre le casemodele de type S_ dans le chemin_courante
-     * @param cm : le caseModele a ajouter dans le chemin_courante (place 0)
+     * @param cm : le caseModele à ajouter dans le chemin_courante (place 0)
      */
     public void cheminStart(CaseModele cm){
-        // si le type n'est pas vide --> du coup ça serait une type S_
-        // et on peut ajoute le case en chemin_courante
+        // si le type n'est pas vide → du coup, ça serait un type S_
+        // et on peut ajoute la case en chemin_courante
         if(cm.type != CaseType.empty){
+
             ajouteCase(cm);
         }
     }
 
     /**
      * methode qui remplit le chemin_courante avec des caseModeles passé en parametre
-     * et qui ajoute le derniere element si le cm.type est de type S_
-     * @param cm : le caseModele a ajouter dans le chemin_courante (place taille_chemin_courant+1 )
+     * et qui ajoute le derniere element si le cm type est de type S_
+     * @param cm : le caseModele à ajouter dans le chemin_courante (place taille_chemin_courant+1)
      */
     public void cheminReste(CaseModele cm){
-        // verifier si le chemin a commence sur une type S_ (le premiere case de tableaux remplit
+        // verifier si le chemin a commencé sur un type S_ (le premiere case de tableaux remplit
         if(chemin_courant[0].type != CaseType.empty){
 
-            // verifier si le case vide, et peut du coup faire partie d'une chemin
+            // verifier si le case vide et peut du coup faire partie d'un chemin
             if(cm.type == CaseType.empty){
 
                 ajouteCase(cm);
@@ -140,5 +192,4 @@ public class Chemin {
             }
         }
     }
-
 }
