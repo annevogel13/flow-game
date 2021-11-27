@@ -18,47 +18,43 @@ public class Chemin {
         }
     }
 
-    public void construireCheminType(CaseModele [][] tab_jeu){
-        System.out.println("change les types du chemin");
-        //tab_jeu[chemin_courant[1].x][chemin_courant[1].y].type = CaseType.v0v1;
-
-
-       // troisCaseDeduireType(chemin_courant[1], chemin_courant[2], chemin_courant[3], tab_jeu);
-        for(int i = 1; i < taille_chemin_courant-1; i++){
-            System.out.println("test L30");
-            System.out.println("change "+chemin_courant[i].x+ ","+chemin_courant[i].y );
-           // tab_jeu[chemin_courant[i].x][chemin_courant[i].y].type = CaseType.h0v0;
-
-            troisCaseDeduireType(chemin_courant[i-1], chemin_courant[i], chemin_courant[i+1], tab_jeu);
-        }
-
-    }
-
     public void troisCaseDeduireType(CaseModele cm1,CaseModele cm2, CaseModele cm3, CaseModele [][] tab_jeu){
 
         /*          v0
-                h0      h1
-                    v1        */
-       // tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
+                     _
+                 h0 | | h1
+                     -
+                     v1        */
+        // x ne marche pas encore, check marche
 
-        // h0v1
-        if(((cm1.x + 1 == cm3.x) && (cm1.y == cm3.y))|| ((cm1.x - 1 == cm3.x)&& (cm1.y == cm3.y))){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;}
-
-        // v0v1 check
-        if((cm1.x + 1 == cm3.x) || (cm1.x - 1 == cm3.x) && (cm1.y == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.v0v1;}
-
-        //h0v0 nope
-        if(((cm1.x - 1 == cm3.x) && (cm1.y + 1== cm3.y))|| ((cm1.x + 1 == cm3.x)&& (cm1.y - 1== cm3.y))) { tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;}
-
-        //h0v1
-        if(((cm1.x + 1 == cm3.x) && (cm1.y - 1== cm3.y))|| ((cm1.x - 1 == cm3.x)&& (cm1.y + 1== cm3.y))) { tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1;
+        // h0v1 x
+        if (((cm1.x + 1 == cm3.x) && (cm1.y == cm3.y)) || ((cm1.x - 1 == cm3.x) && (cm1.y == cm3.y))) {
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1;
         }
 
-        //h1v0 nope
-        if(((cm1.x + 1 == cm3.x) && (cm1.y + 1== cm3.y))|| ((cm1.x - 1 == cm3.x)&& (cm1.y -1== cm3.y))) { tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0;}
+        // v0v1 (check)
+        if ((cm1.x + 1 == cm3.x) || (cm1.x - 1 == cm3.x) && (cm1.y == cm3.y)) {
+            tab_jeu[cm2.x][cm2.y].type = CaseType.v0v1;
+        }
+
+        //h0v0 x
+        if (((cm1.x - 1 == cm3.x) && (cm1.y + 1 == cm3.y)) || ((cm1.x + 1 == cm3.x) && (cm1.y - 1 == cm3.y))) {
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
+        }
+
+        //h0h1 x
+        if (((cm1.x - 1 == cm3.x) && (cm1.y + 1 == cm3.y)) || ((cm1.x + 1 == cm3.x) && (cm1.y - 1 == cm3.y))) {
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h0h1;
+        }
+        //h0v1 x
+        if (((cm1.x + 1 == cm3.x) && (cm1.y + 1 == cm3.y)) || ((cm1.x - 1 == cm3.x) && (cm1.y - 1 == cm3.y))) {
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1;
+        }
 
         // h1v1 (check)
-        if( ( (cm1.x + 1 == cm3.x) && (cm1.y - 1== cm3.y) ) || ( (cm1.x - 1 == cm3.x)&& (cm1.y + 1== cm3.y) ) ) { tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1;}
+        if (((cm1.x + 1 == cm3.x) && (cm1.y - 1 == cm3.y)) || ((cm1.x - 1 == cm3.x) && (cm1.y + 1 == cm3.y))) {
+            tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1;
+        }
 
     }
 
@@ -153,11 +149,10 @@ public class Chemin {
      * @param cm : le case a ajouter
      */
     public void ajouteCase(CaseModele cm) {
-        // TODO verifier si cm est une voisin authorisée par rapport à le case d'avant
+
         chemin_courant[taille_chemin_courant].x = cm.x;
         chemin_courant[taille_chemin_courant].y = cm.y;
         chemin_courant[taille_chemin_courant].type = cm.type;
-       // System.out.println("type : "+chemin_courant[taille_chemin_courant].type );
         taille_chemin_courant = taille_chemin_courant + 1;
 
     }

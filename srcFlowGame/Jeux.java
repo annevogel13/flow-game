@@ -56,20 +56,18 @@ public class Jeux extends Observable {
         notifyObservers();
     }
 
-    public void test(CaseModele [][] tab_jeu){
-
+    public void affichageCheminGrille(){
+        // de chemin_courant[1] jusqua l'avant derniere
         for(int i = 1; i < chemin.taille_chemin_courant-1; i++){
-
-            System.out.println("change "+chemin.chemin_courant[i].x+ ","+chemin.chemin_courant[i].y );
-            // tab_jeu[chemin_courant[i].x][chemin_courant[i].y].type = CaseType.h0v0;
 
             chemin.troisCaseDeduireType(chemin.chemin_courant[i-1], chemin.chemin_courant[i], chemin.chemin_courant[i+1], tab_jeu);
             chemin.chemin_courant[i].type = tab_jeu[chemin.chemin_courant[i].x][chemin.chemin_courant[i].y].type;
+
+            System.out.println("change "+chemin.chemin_courant[i].x+ ","+chemin.chemin_courant[i].y + " en "+ chemin.chemin_courant[i].type);
+
+            setChanged();
+            notifyObservers();
         }
-
-
-        setChanged();
-        notifyObservers();
     }
 
     // TODO redonant

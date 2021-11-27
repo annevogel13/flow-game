@@ -52,7 +52,6 @@ public class VueControleurGrille extends JFrame implements Observer{
                         //jeu.construireChemin(ci,cj);
 
                         // anne
-                        // TODO mettre les fonctions dans une fonction dans jeu.sourisCliquer();
                             jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
                     }
 
@@ -63,14 +62,13 @@ public class VueControleurGrille extends JFrame implements Observer{
                         System.out.println("mouseEntered : " + e.getSource());
 
                         // anne
-                        // TODO mettre les fonctions dans une fonction dans jeu.sourisRentreDansCase();
                         jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
 
                         // jade
-                      //  if(released == true){
-                        //    System.out.print("DEDANSS");
-                         //   jeu.construireChemin(ci,cj);
-                       // }
+                        //  if(released == true){
+                        //    System.out.print("DEDANS");
+                        //   jeu.construireChemin(ci,cj);
+                        // }
                     }
 
                     @Override
@@ -80,15 +78,10 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                         // Anne
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
-
-                        // TODO mettre les fonctions dans une fonction dans jeu.sourisRelacher();
-                        // afficher le chemin construit, et aprés on le detruit
-                        jeu.chemin.afficherChemin();
-                        jeu.test(jeu.tab_jeu);
-
                         System.out.println("taille de chemin : "+jeu.chemin.taille_chemin_courant);
 
-                        jeu.chemin.afficherCheminTypes();
+                        jeu.chemin.afficherChemin();
+                        jeu.affichageCheminGrille();
                         jeu.verif_chemin();
 
                         // afficher le tableau des chemins
@@ -96,8 +89,8 @@ public class VueControleurGrille extends JFrame implements Observer{
                             jeu.tab_chemin[m].afficherChemin();
                         }
 
-                         // code jade
-                        //released = false;
+                        // code jade
+                        // released = false;
                         //jeu.verif_chemin();
                         //jeu.chemin.afficherChemin();
 
