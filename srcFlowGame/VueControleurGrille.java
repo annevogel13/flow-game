@@ -84,6 +84,8 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // TODO mettre les fonctions dans une fonction dans jeu.sourisRelacher();
                         // afficher le chemin construit, et aprés on le detruit
                         jeu.chemin.afficherChemin();
+                        jeu.test(jeu.tab_jeu);
+
                         System.out.println("taille de chemin : "+jeu.chemin.taille_chemin_courant);
 
                         jeu.chemin.afficherCheminTypes();

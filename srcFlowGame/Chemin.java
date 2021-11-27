@@ -20,39 +20,45 @@ public class Chemin {
 
     public void construireCheminType(CaseModele [][] tab_jeu){
         System.out.println("change les types du chemin");
-        for(int i = 1; i < taille_chemin_courant -1 ; i++){
+        //tab_jeu[chemin_courant[1].x][chemin_courant[1].y].type = CaseType.v0v1;
 
-            tab_jeu[chemin_courant[i].x][chemin_courant[i].y].type = CaseType.h0v0;
 
-            //troisCaseDeduireType(chemin_courant[i], chemin_courant[i+1], chemin_courant[i+2], tab_jeu);
+       // troisCaseDeduireType(chemin_courant[1], chemin_courant[2], chemin_courant[3], tab_jeu);
+        for(int i = 1; i < taille_chemin_courant-1; i++){
+            System.out.println("test L30");
+            System.out.println("change "+chemin_courant[i].x+ ","+chemin_courant[i].y );
+           // tab_jeu[chemin_courant[i].x][chemin_courant[i].y].type = CaseType.h0v0;
+
+            troisCaseDeduireType(chemin_courant[i-1], chemin_courant[i], chemin_courant[i+1], tab_jeu);
         }
+
     }
 
     public void troisCaseDeduireType(CaseModele cm1,CaseModele cm2, CaseModele cm3, CaseModele [][] tab_jeu){
-        System.out.println("change le type d'une case ");
-        /*   h0h1, v0v1, h0v0, h0v1, h1v0, h1v1
-            - horizontaal i blijft hetzelfde j verandert
-            - verticaal j blijft hetzelfde i verandert
-            - |_ 15.00 uur :
-            - _| 09.00 uur :
-            - h0v0
 
-        horizontaal is i
-        verticaal is j
-         */
+        /*          v0
+                h0      h1
+                    v1        */
+       // tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
 
-        if((cm1.x + 1 == cm3.x) || (cm1.x - 1 == cm3.x)){
-            // horizontaal
-            tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
+        // h0v1
+        if(((cm1.x + 1 == cm3.x) && (cm1.y == cm3.y))|| ((cm1.x - 1 == cm3.x)&& (cm1.y == cm3.y))){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;}
+
+        // v0v1 check
+        if((cm1.x + 1 == cm3.x) || (cm1.x - 1 == cm3.x) && (cm1.y == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.v0v1;}
+
+        //h0v0 nope
+        if(((cm1.x - 1 == cm3.x) && (cm1.y + 1== cm3.y))|| ((cm1.x + 1 == cm3.x)&& (cm1.y - 1== cm3.y))) { tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;}
+
+        //h0v1
+        if(((cm1.x + 1 == cm3.x) && (cm1.y - 1== cm3.y))|| ((cm1.x - 1 == cm3.x)&& (cm1.y + 1== cm3.y))) { tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1;
         }
 
-        if((cm1.y + 1 == cm3.y) || ( cm1.y - 1 == cm3.y)){
-            // verticaal
-            tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1;
-        }
+        //h1v0 nope
+        if(((cm1.x + 1 == cm3.x) && (cm1.y + 1== cm3.y))|| ((cm1.x - 1 == cm3.x)&& (cm1.y -1== cm3.y))) { tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0;}
 
-
-        tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
+        // h1v1 (check)
+        if( ( (cm1.x + 1 == cm3.x) && (cm1.y - 1== cm3.y) ) || ( (cm1.x - 1 == cm3.x)&& (cm1.y + 1== cm3.y) ) ) { tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1;}
 
     }
 
