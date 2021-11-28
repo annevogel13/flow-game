@@ -299,6 +299,7 @@ public class Jeux extends Observable {
 
         }else {
             System.out.println("on a déjà une chemin pour "+chemin.chemin_courant[0].type);
+            chemin = new Chemin();
             // afficher le tableau des chemins
             for (int m = 0; m < nombre_chemin; m++) {
                 tab_chemin[m].afficherChemin();
