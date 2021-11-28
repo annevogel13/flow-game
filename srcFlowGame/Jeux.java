@@ -56,18 +56,36 @@ public class Jeux extends Observable {
         notifyObservers();
     }
 
-    public void affichageCheminGrille(){
+    /**
+     * méthode qui parcour le chemin_courante et en déduit le type des cases dans chemin_courante
+     */
+    public void affichageCheminGrille() {
         // de chemin_courant[1] jusqua l'avant derniere
-        for(int i = 1; i < chemin.taille_chemin_courant-1; i++){
+        for (int i = 1; i < chemin.taille_chemin_courant - 1; i++) {
 
-            chemin.troisCaseDeduireType(chemin.chemin_courant[i-1], chemin.chemin_courant[i], chemin.chemin_courant[i+1], tab_jeu);
+            chemin.troisCaseDeduireType(chemin.chemin_courant[i - 1], chemin.chemin_courant[i], chemin.chemin_courant[i + 1], tab_jeu);
             chemin.chemin_courant[i].type = tab_jeu[chemin.chemin_courant[i].x][chemin.chemin_courant[i].y].type;
 
-            System.out.println("change "+chemin.chemin_courant[i].x+ ","+chemin.chemin_courant[i].y + " en "+ chemin.chemin_courant[i].type);
+            System.out.println("change " + chemin.chemin_courant[i].x + "," + chemin.chemin_courant[i].y + " en " + chemin.chemin_courant[i].type);
 
             setChanged();
             notifyObservers();
         }
+    }
+
+    /**
+     * méthode qui vérifie si le chemin qu'on a déssiner, n'est pas déjà dans le tab_chemin[]
+     * @return vrai si le chemin n'est PAS dans le tab_chemin[], return false si le chemin EST dans le tab_chemin[]
+     */
+    public boolean checkOccurenceChemin() {
+        CaseType verifier = chemin.chemin_courant[0].type;
+        for (int i = 0; i < tab_chemin.length; i++) {
+            // verifier si on n'a pas déjà un chemin qui commence avec S_
+            if (tab_chemin[i].chemin_courant[0].type == verifier) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // TODO redonant
@@ -264,6 +282,26 @@ public class Jeux extends Observable {
 
                 }
 
+            }
+        }
+    }
+
+    /**
+     * méthode qui règle toutes les réponses sur l'événement "mouseReleased"
+     */
+    public void sourisRelacher(){
+
+        chemin.afficherChemin();
+        if(checkOccurenceChemin()) {
+
+            affichageCheminGrille();
+            verif_chemin();
+
+        }else {
+            System.out.println("on a déjà une chemin pour "+chemin.chemin_courant[0].type);
+            // afficher le tableau des chemins
+            for (int m = 0; m < nombre_chemin; m++) {
+                tab_chemin[m].afficherChemin();
             }
         }
     }

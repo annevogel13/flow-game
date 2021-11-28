@@ -79,21 +79,14 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // Anne
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
                         System.out.println("taille de chemin : "+jeu.chemin.taille_chemin_courant);
+                        jeu.sourisRelacher();
 
-                        jeu.chemin.afficherChemin();
-                        jeu.affichageCheminGrille();
-                        jeu.verif_chemin();
-
-                        // afficher le tableau des chemins
-                        for(int m = 0 ; m < jeu.nombre_chemin ; m++){
-                            jeu.tab_chemin[m].afficherChemin();
-                        }
 
                         // code jade
-                        // released = false;
-                        //jeu.verif_chemin();
-                        //jeu.chemin.afficherChemin();
-
+                        /* released = false;
+                          jeu.verif_chemin();
+                          jeu.chemin.afficherChemin();
+                        */
                     }
 
                 });
