@@ -305,4 +305,9 @@ public class Jeux extends Observable {
             }
         }
     }
+
+    public void enleverCheminGrille(CaseType S_){
+            // TODO enlever des chemins si on clique dessous
+
+    }
 }

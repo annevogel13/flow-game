@@ -66,8 +66,8 @@ public class VueCase extends JPanel {
                 drawSix(g);
                 break;
             case h1v0:
-                // TODO
-
+                drawNoon(g);
+                drawThree(g);
                 break;
             case h1v1 :
                 drawThree(g);

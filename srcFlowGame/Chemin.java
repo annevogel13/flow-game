@@ -156,40 +156,71 @@ public class Chemin {
     public void troisCaseDeduireType(CaseModele cm1,CaseModele cm2, CaseModele cm3, CaseModele [][] tab_jeu){
 
         /*          v0
-                     _
-                 h0 | | h1
-                     -
+                     |
+                h0 -- -- h1
+                     |
                      v1
+                         h --> v                    v --> h
+                    h0v0 x+1 y-1 && cm1.y == cm2.y   ||  x-1 y+1 && cm2.y == cm3.y
+                    h0v1 x+1 y+1 && cm1.y == cm2.y   ||  x-1 y-1 && cm2.y == cm3.y
+                    h1v0 x-1 y-1 && cm1.y == cm2.y   ||  x+1 y+1 && cm2.y == cm3.y
+                    h1v1 x-1 y+1 && cm1.y == cm2.y   ||  x+1 x-1 && cm2.y == cm3.y
 
-                    v0h1    x+1 y+1
-                    h0v0    x+1 y-1
-                    h1v1    x-1 y+1
-                    h1v0
         */
-
         // les lignes droites
         if(cm1.x == cm3.x){
             tab_jeu[cm2.x][cm2.y].type = CaseType.h0h1;
         }else if(cm1.y == cm3.y) {
             tab_jeu[cm2.x][cm2.y].type = CaseType.v0v1;
         }
+
+        // h --> v
+        if(cm1.y == cm2.y){
+            System.out.println("y is gelijk op 1 en 2");
+            if((cm1.x + 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0; }
+            if((cm1.x - 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1; }
+            if((cm1.x + 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0; }
+            if((cm1.x - 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1; }
+
+            // v --> h
+        }else if(cm2.y == cm3.y){
+            System.out.println(" y is gelijk op 2 3");
+            if((cm1.x - 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0; }
+            if((cm1.x + 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1; }
+            if((cm1.x - 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0; }
+            if((cm1.x + 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1; }
+
+        }
+        /*
+        if((cm1.x < cm3.x) && (cm1.y > cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1; }
+      //  if((cm1.x < cm3.x) && (cm1.y > cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0; }
+
+        if((cm1.x < cm3.x) && (cm1.y < cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1; }
+
+        //if((cm1.x < cm3.x) && (cm1.y > cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0; }
+        */
+
+
         /*
         // à partir de gauche (H0)
         if(cm1.x + 1 == cm3.x){
             if(cm1.y + 1 == cm3.y){
-                tab_jeu[cm2.x][cm2.y].type = CaseType.v0h1;
-            }else if(cm1.y -1 == cm3.y){
+                tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1;
+            }else if(cm1.y - 1 == cm3.y){
                 tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
             }
         }
 
         // à partir de droite (H1)
-        if((cm1.x - 1 == cm3.x)){
+        if(cm1.x - 1 == cm3.x){
             if((cm1.y + 1 == cm3.y)){
                 tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1;
-            }else if((cm1.y - 1 == cm3.y)){
+            }else if(cm1.y - 1 == cm3.y){
                 tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0;
             }
         } */
+
+
     }
+
 }
