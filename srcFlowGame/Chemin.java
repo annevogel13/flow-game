@@ -159,7 +159,13 @@ public class Chemin {
                      _
                  h0 | | h1
                      -
-                     v1        */
+                     v1
+
+                    v0h1    x+1 y+1
+                    h0v0    x+1 y-1
+                    h1v1    x-1 y+1
+                    h1v0
+        */
 
         // les lignes droites
         if(cm1.x == cm3.x){
@@ -171,11 +177,12 @@ public class Chemin {
         // à partir de gauche (H0)
         if(cm1.x + 1 == cm3.x){
             if(cm1.y + 1 == cm3.y){
-                tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1;
+                tab_jeu[cm2.x][cm2.y].type = CaseType.v0h1;
             }else if(cm1.y -1 == cm3.y){
                 tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0;
             }
         }
+
         // à partir de droite (H1)
         if((cm1.x - 1 == cm3.x)){
             if((cm1.y + 1 == cm3.y)){

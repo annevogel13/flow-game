@@ -123,7 +123,7 @@ public class Jeux extends Observable {
         //2 - on vérifie que les cases se suivent
         bool2 = chemin.verif_chemin();
 
-        System.out.print( " ===> "+ bool1 + " " +bool2);
+        System.out.print( " ===> "+ bool1 + " " +bool2+"\n");
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
             tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
