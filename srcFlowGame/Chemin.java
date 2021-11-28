@@ -166,25 +166,25 @@ public class Chemin {
                     h1v0 x-1 y-1 && cm1.y == cm2.y   ||  x+1 y+1 && cm2.y == cm3.y
                     h1v1 x-1 y+1 && cm1.y == cm2.y   ||  x+1 x-1 && cm2.y == cm3.y
         */
-        // les lignes droites
 
+        // h0h1, v0v1
         if(cm1.x == cm3.x){
             tab_jeu[cm2.x][cm2.y].type = CaseType.h0h1;
         }else if(cm1.y == cm3.y) {
             tab_jeu[cm2.x][cm2.y].type = CaseType.v0v1;
         }
 
-        // h --> v
+        // h_ --> v_
         if(cm1.y == cm2.y){
-            System.out.println("y is gelijk op 1 en 2");
+
             if((cm1.x + 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0; }
             if((cm1.x - 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1; }
             if((cm1.x + 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0; }
             if((cm1.x - 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1; }
 
-            // v --> h
+            // v_ --> h_
         }else if(cm2.y == cm3.y){
-            System.out.println(" y is gelijk op 2 3");
+
             if((cm1.x - 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v0; }
             if((cm1.x + 1 == cm3.x)&&(cm1.y + 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h0v1; }
             if((cm1.x - 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v0; }
