@@ -254,18 +254,21 @@ public class Jeux extends Observable {
     public void sourisRelacher(){
 
         chemin.afficherChemin();
-        if(!checkOccurenceChemin(chemin.chemin_courant[0].type) && chemin.prem_der_egales()) {
+        if (!checkOccurenceChemin(chemin.chemin_courant[0].type) && chemin.prem_der_egales()) {
 
             affichageCheminGrille();
             verif_chemin();
 
-        }else {
-            System.out.println("on a déjà une chemin pour "+chemin.chemin_courant[0].type);
+        } else if (chemin.chemin_courant[0].type == CaseType.empty) {
+            chemin = new Chemin();
+        } else {
+            System.out.println("on a déjà une chemin pour " + chemin.chemin_courant[0].type);
             chemin = new Chemin();
             // afficher le tableau des chemins
             afficherTabChemin();
 
         }
+
     }
 
     public void afficherTabChemin(){
@@ -274,31 +277,47 @@ public class Jeux extends Observable {
         }
     }
 
-
+    /**
+     * méthode qui règle tous les evenements liée a la clique d'une souris
+     * @param ci coördinate x de case tab_jeu ou le soursi a cliqué
+     * @param cj coördinate y de case tab_jeu ou le soursi a cliqué
+     */
     public void sourisCliquer(int ci, int cj){
 
         if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
 
-            int indice = findOccurenceChemin(tab_jeu[ci][cj].type);
-            assert (tab_jeu[ci][cj].type == tab_chemin[indice].chemin_courant[0].type);
-
-            // change le type des cases concerncée en empty
-            for (int i = 1; i < tab_chemin[indice].taille_chemin_courant - 1; i++) {
-
-                int x = tab_chemin[indice].chemin_courant[i].x;
-                int y = tab_chemin[indice].chemin_courant[i].y;
-                tab_jeu[x][y].type = CaseType.empty;
-            }
-
-            // check
-            enleverCheminSpecifique(indice);
-            System.out.println("chemin " + tab_chemin[indice].chemin_courant[0].type + " est supprimé");
-
-            setChanged();
-            notifyObservers();
+            modificationSupprimer(tab_jeu[ci][cj].type);
+            chemin = new Chemin();
 
         } else chemin.cheminStart(tab_jeu[ci][cj]);
 
+    }
+
+    /**
+     * méthode qui fait les modifications necessaire quand on supprime un chemin de type
+     * @param cheminType le type de chemin qu'on veut supprimer
+     */
+    private void modificationSupprimer(CaseType cheminType) {
+        int indice = findOccurenceChemin(cheminType);
+        // double verification que les deux types sont le même
+        assert (cheminType == tab_chemin[indice].chemin_courant[0].type);
+
+        System.out.println("on va supprimer le chemin " + tab_chemin[indice].chemin_courant[0].type);
+
+        // change le type des cases concerncée en empty
+        for (int i = 1; i < tab_chemin[indice].taille_chemin_courant - 1; i++) {
+
+            int x = tab_chemin[indice].chemin_courant[i].x;
+            int y = tab_chemin[indice].chemin_courant[i].y;
+            tab_jeu[x][y].type = CaseType.empty;
+        }
+
+        // enlever le chemin du tableau de chemins
+        enleverCheminSpecifique(indice);
+
+        // pour mettre à jour l'affichage
+        setChanged();
+        notifyObservers();
     }
 
     /**
@@ -306,8 +325,9 @@ public class Jeux extends Observable {
      */
     public void enleverDerniereChemin(){
 
-            tab_chemin[nombre_chemin] = new Chemin();
-            nombre_chemin= nombre_chemin -1 ;
+        CaseType typeASupprimer = tab_chemin[nombre_chemin-1].chemin_courant[0].type;
+        modificationSupprimer(typeASupprimer);
+
     }
 
     /**
@@ -318,8 +338,6 @@ public class Jeux extends Observable {
 
         // on remplace le chemin par un nouveau chemin (donc vide)
         tab_chemin[indiceDansTabChemin] = new Chemin();
-        System.out.println("_______________1______________");
-        afficherTabChemin();
 
         // indice est le premiere place libre dans tab_chemin[]
         int i = indiceDansTabChemin ;
@@ -328,9 +346,7 @@ public class Jeux extends Observable {
             tab_chemin[i] = tab_chemin[i+1];
             i++;
         }while(i < nombre_chemin);
-
-
-        System.out.println("_______________2______________");
+        nombre_chemin = nombre_chemin -1 ;
         afficherTabChemin();
 
     }

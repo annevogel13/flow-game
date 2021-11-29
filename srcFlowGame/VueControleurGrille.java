@@ -66,7 +66,6 @@ public class VueControleurGrille extends JFrame implements Observer{
 
 
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
-                        System.out.println("taille de chemin : "+jeu.chemin.taille_chemin_courant);
                         jeu.sourisRelacher();
 
                     }
