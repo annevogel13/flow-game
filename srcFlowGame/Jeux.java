@@ -66,28 +66,12 @@ public class Jeux extends Observable {
             chemin.troisCaseDeduireType(chemin.chemin_courant[i - 1], chemin.chemin_courant[i], chemin.chemin_courant[i + 1], tab_jeu);
             chemin.chemin_courant[i].type = tab_jeu[chemin.chemin_courant[i].x][chemin.chemin_courant[i].y].type;
 
-            System.out.println("change " + chemin.chemin_courant[i].x + "," + chemin.chemin_courant[i].y + " en " + chemin.chemin_courant[i].type);
+           // System.out.println("change " + chemin.chemin_courant[i].x + "," + chemin.chemin_courant[i].y + " en " + chemin.chemin_courant[i].type);
 
             setChanged();
             notifyObservers();
         }
     }
-
-    /**
-     * méthode qui vérifie si le chemin qu'on a déssiner, est déjà dans le tab_chemin[]
-     * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
-     */
-    public boolean checkOccurenceChemin(CaseType verifier) {
-
-        for (int i = 0; i < tab_chemin.length; i++) {
-            // verifier si on n'a pas déjà un chemin qui commence avec S_
-            if (tab_chemin[i].chemin_courant[0].type == verifier) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     public void verif_chemin(){
         boolean bool1;
@@ -259,10 +243,7 @@ public class Jeux extends Observable {
             affichageCheminGrille();
             verif_chemin();
 
-        } else if (chemin.chemin_courant[0].type == CaseType.empty) {
-            chemin = new Chemin();
         } else {
-            System.out.println("on a déjà une chemin pour " + chemin.chemin_courant[0].type);
             chemin = new Chemin();
             // afficher le tableau des chemins
             afficherTabChemin();
@@ -270,13 +251,6 @@ public class Jeux extends Observable {
         }
 
     }
-
-    public void afficherTabChemin(){
-        for (int m = 0; m < nombre_chemin; m++) {
-            tab_chemin[m].afficherChemin();
-        }
-    }
-
     /**
      * méthode qui règle tous les evenements liée a la clique d'une souris
      * @param ci coördinate x de case tab_jeu ou le soursi a cliqué
@@ -284,12 +258,15 @@ public class Jeux extends Observable {
      */
     public void sourisCliquer(int ci, int cj){
 
-        if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
+        if(checkOccurenceChemin(tab_jeu[ci][cj].type)) {
 
             modificationSupprimer(tab_jeu[ci][cj].type);
             chemin = new Chemin();
 
-        } else chemin.cheminStart(tab_jeu[ci][cj]);
+        } else if(tab_jeu[ci][cj].type == CaseType.empty){
+            System.out.println("On n'a pas le droit de commencer sur cette case");
+            chemin = new Chemin();
+        }else chemin.cheminStart(tab_jeu[ci][cj]);
 
     }
 
@@ -351,11 +328,28 @@ public class Jeux extends Observable {
 
     }
 
+
+    /**
+     * méthode qui vérifie si le chemin qu'on a déssiner, est déjà dans le tab_chemin[]
+     * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
+     */
+    public boolean checkOccurenceChemin(CaseType verifier) {
+        for (Chemin value : tab_chemin) {
+                // verifier si on n'a pas déjà un chemin qui commence avec S_
+                if (value.chemin_courant[0].type == verifier) {
+                    return true;
+                }
+            }
+
+        return false;
+    }
+
     /**
      * méthode qui vérifie si le chemin qu'on a déssiner, est déjà dans le tab_chemin[]
      * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
      */
     public int findOccurenceChemin(CaseType verifier) {
+
 
         for (int i = 0; i < tab_chemin.length; i++) {
             // verifier si on n'a pas déjà un chemin qui commence avec S_
@@ -366,4 +360,15 @@ public class Jeux extends Observable {
 
         return -1;
     }
+
+    /**
+     * méthode qui aide avec le debugage
+     */
+    public void afficherTabChemin(){
+        for (int m = 0; m < nombre_chemin; m++) {
+            tab_chemin[m].afficherChemin();
+        }
+    }
+
+
 }
