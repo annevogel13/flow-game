@@ -147,12 +147,20 @@ public class Chemin {
                 // verifier si cm est le fin d'un chemin
                 if (cm.type == chemin_courant[0].type) {
                     System.out.println("(Debut, Fin) de " + cm.type);
+
                     ajouteCase(cm);
                 }
             }
         }
     }
 
+    /**
+     * Méthode qui déduite le type a donne à cm2.
+     * @param cm1 CaseModele, case avant
+     * @param cm2 CaseModele de laquelle on veut en déduire le type
+     * @param cm3 CaseModele, case après
+     * @param tab_jeu le tab_jeu avec les donnees du jeu
+     */
     public void troisCaseDeduireType(CaseModele cm1,CaseModele cm2, CaseModele cm3, CaseModele [][] tab_jeu){
 
         /*          v0

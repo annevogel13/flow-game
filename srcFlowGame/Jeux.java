@@ -292,7 +292,7 @@ public class Jeux extends Observable {
     public void sourisRelacher(){
 
         chemin.afficherChemin();
-        if(checkOccurenceChemin()) {
+        if(checkOccurenceChemin() && chemin.prem_der_egales()) {
 
             affichageCheminGrille();
             verif_chemin();
