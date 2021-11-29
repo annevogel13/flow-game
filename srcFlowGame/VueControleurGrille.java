@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -19,8 +18,6 @@ public class VueControleurGrille extends JFrame implements Observer{
     // Afin d'accéder au composant sur lequel le bouton de souris est relaché, on le conserve avec la variable currentComponent à
     // chaque entrée dans un composant - voir (**)
     private JComponent currentComponent;
-
-    public boolean released = false;
 
     public VueControleurGrille(Jeux jeu) {
         int size = jeu.size;

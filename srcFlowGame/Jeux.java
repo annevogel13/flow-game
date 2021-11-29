@@ -86,11 +86,12 @@ public class Jeux extends Observable {
         if(bool1 && bool2){
             tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
             tab_chemin[nombre_chemin].taille_chemin_courant = chemin.taille_chemin_courant;
+            affichageCheminGrille();
 
             nombre_chemin += 1;
 
-            chemin = new Chemin();
         }
+        chemin = new Chemin();
     }
 
     public void lire_fichier_texte(String s) throws IOException {
@@ -238,34 +239,38 @@ public class Jeux extends Observable {
     public void sourisRelacher(){
 
         chemin.afficherChemin();
+        // verifier si ce type de case S_ est deja dans le tab_chemin et si le chemin va bien de S_ à S_
         if (!checkOccurenceChemin(chemin.chemin_courant[0].type) && chemin.prem_der_egales()) {
 
-            affichageCheminGrille();
+            // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans le fonction)
             verif_chemin();
 
         } else {
+            // on remet le chemin_courante à 0
             chemin = new Chemin();
             // afficher le tableau des chemins
             afficherTabChemin();
-
         }
-
     }
+
     /**
      * méthode qui règle tous les evenements liée a la clique d'une souris
      * @param ci coördinate x de case tab_jeu ou le soursi a cliqué
      * @param cj coördinate y de case tab_jeu ou le soursi a cliqué
      */
     public void sourisCliquer(int ci, int cj){
-
+        // verifier si on a déjà créé un chemin qui commence avec ce type
         if(checkOccurenceChemin(tab_jeu[ci][cj].type)) {
-
+            // si vrai, on supprime le vieux chemin
             modificationSupprimer(tab_jeu[ci][cj].type);
+            // et on rémets le chemin_courant à 0
             chemin = new Chemin();
 
+            // si on essaye de comménce un chemin sur une case vide, on affiche un message dans la console
         } else if(tab_jeu[ci][cj].type == CaseType.empty){
             System.out.println("On n'a pas le droit de commencer sur cette case");
             chemin = new Chemin();
+            // autrement on commence un nouveau chemin
         }else chemin.cheminStart(tab_jeu[ci][cj]);
 
     }
