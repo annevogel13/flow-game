@@ -124,7 +124,6 @@ public class Chemin {
         // si le type n'est pas vide → du coup, ça serait un type S_
         // et on peut ajoute la case en chemin_courante
         if(cm.type != CaseType.empty){
-
             ajouteCase(cm);
         }
     }

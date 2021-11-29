@@ -74,46 +74,20 @@ public class Jeux extends Observable {
     }
 
     /**
-     * méthode qui vérifie si le chemin qu'on a déssiner, n'est pas déjà dans le tab_chemin[]
-     * @return vrai si le chemin n'est PAS dans le tab_chemin[], return false si le chemin EST dans le tab_chemin[]
+     * méthode qui vérifie si le chemin qu'on a déssiner, est déjà dans le tab_chemin[]
+     * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
      */
-    public boolean checkOccurenceChemin() {
-        CaseType verifier = chemin.chemin_courant[0].type;
+    public boolean checkOccurenceChemin(CaseType verifier) {
+
         for (int i = 0; i < tab_chemin.length; i++) {
             // verifier si on n'a pas déjà un chemin qui commence avec S_
             if (tab_chemin[i].chemin_courant[0].type == verifier) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
-    // TODO redonant
-    public void construireChemin(int x, int y){
-         CaseType cm = this.tab_jeu[x][y].type;
-         //on vérifie que la première case soit une forme
-        if(chemin.chemin_courant[0].type==CaseType.empty){
-            System.out.print("\n LIGNE 53 \n");
-            if((cm==CaseType.S1)||(cm==CaseType.S2)||(cm==CaseType.S3)||(cm==CaseType.S4)||(cm==CaseType.S5)||(cm==CaseType.S6)||(cm==CaseType.S7)||(cm==CaseType.S8)||(cm==CaseType.S9)){
-                System.out.print("\n LIGNE 55 \n");
-                chemin.chemin_courant[0].x = x;
-                chemin.chemin_courant[0].y = y;
-                chemin.chemin_courant[0].type = cm;
-                chemin.taille_chemin_courant = chemin.taille_chemin_courant +1 ;
-                System.out.print("Premiere case du chemin est " + chemin.chemin_courant[0].type + "\n" );
-            }
-        }
-        else{
-            System.out.print("\n LIGNE 63 \n");
-            if(!(chemin.chemin_courant[0].type==CaseType.empty) && (chemin.chemin_courant[0].x != x) || (chemin.chemin_courant[0].y != y)){
-                System.out.print("\n LIGNE 65 \n");
-                ajouteCaseModelChemin(x, y);
-            }
-            else{
-                System.out.print("\n ==> " + chemin.chemin_courant[0].type + "   " + (chemin.chemin_courant[0].x != x) +" "+ (chemin.chemin_courant[0].y != y) +"\n");
-            }
-        }
-    }
 
     public void verif_chemin(){
         boolean bool1;
@@ -127,24 +101,12 @@ public class Jeux extends Observable {
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
             tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
-            //System.out.print(" ==> *************"  + tab_chemin[nombre_chemin].chemin_courant[0].x);
+            tab_chemin[nombre_chemin].taille_chemin_courant = chemin.taille_chemin_courant;
+
             nombre_chemin += 1;
 
             chemin = new Chemin();
         }
-    }
-
-    // TODO redonant
-    public void ajouteCaseModelChemin(int x, int y){
-        System.out.print("\nLIGNE 117 : taille chemin courant =  " +  chemin.taille_chemin_courant+"\n");
-
-        int derniereCaseRempli = chemin.taille_chemin_courant;
-
-        chemin.chemin_courant[derniereCaseRempli] = tab_jeu[x][y];
-
-        chemin.taille_chemin_courant += 1 ;
-
-
     }
 
     public void lire_fichier_texte(String s) throws IOException {
@@ -292,7 +254,7 @@ public class Jeux extends Observable {
     public void sourisRelacher(){
 
         chemin.afficherChemin();
-        if(checkOccurenceChemin() && chemin.prem_der_egales()) {
+        if(!checkOccurenceChemin(chemin.chemin_courant[0].type) && chemin.prem_der_egales()) {
 
             affichageCheminGrille();
             verif_chemin();
@@ -301,14 +263,91 @@ public class Jeux extends Observable {
             System.out.println("on a déjà une chemin pour "+chemin.chemin_courant[0].type);
             chemin = new Chemin();
             // afficher le tableau des chemins
-            for (int m = 0; m < nombre_chemin; m++) {
-                tab_chemin[m].afficherChemin();
-            }
+            afficherTabChemin();
+
         }
     }
 
-    public void enleverCheminGrille(CaseType S_){
-            // TODO enlever des chemins si on clique dessous
+    public void afficherTabChemin(){
+        for (int m = 0; m < nombre_chemin; m++) {
+            tab_chemin[m].afficherChemin();
+        }
+    }
 
+
+    public void sourisCliquer(int ci, int cj){
+
+        if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
+
+            int indice = findOccurenceChemin(tab_jeu[ci][cj].type);
+            assert (tab_jeu[ci][cj].type == tab_chemin[indice].chemin_courant[0].type);
+
+            // change le type des cases concerncée en empty
+            for (int i = 1; i < tab_chemin[indice].taille_chemin_courant - 1; i++) {
+
+                int x = tab_chemin[indice].chemin_courant[i].x;
+                int y = tab_chemin[indice].chemin_courant[i].y;
+                tab_jeu[x][y].type = CaseType.empty;
+            }
+
+            // check
+            enleverCheminSpecifique(indice);
+            System.out.println("chemin " + tab_chemin[indice].chemin_courant[0].type + " est supprimé");
+
+            setChanged();
+            notifyObservers();
+
+        } else chemin.cheminStart(tab_jeu[ci][cj]);
+
+    }
+
+    /**
+     * méthode qui enleve la dernière chemin crée avec un bouton undo
+     */
+    public void enleverDerniereChemin(){
+
+            tab_chemin[nombre_chemin] = new Chemin();
+            nombre_chemin= nombre_chemin -1 ;
+    }
+
+    /**
+     * méthode qui enleve un chemin specifique dans le tab_chemin (quand on clique sur l'icone)
+     * * @param indiceDansTabChemin l'indice de chemin dans tab_chemin qui doit être supprimé
+     */
+    public void enleverCheminSpecifique(int indiceDansTabChemin){
+
+        // on remplace le chemin par un nouveau chemin (donc vide)
+        tab_chemin[indiceDansTabChemin] = new Chemin();
+        System.out.println("_______________1______________");
+        afficherTabChemin();
+
+        // indice est le premiere place libre dans tab_chemin[]
+        int i = indiceDansTabChemin ;
+        do{
+            // on deplace tous les chemins une à gauche dans le tab_chemin
+            tab_chemin[i] = tab_chemin[i+1];
+            i++;
+        }while(i < nombre_chemin);
+
+
+        System.out.println("_______________2______________");
+        afficherTabChemin();
+
+    }
+
+    /**
+     * méthode qui vérifie si le chemin qu'on a déssiner, est déjà dans le tab_chemin[]
+     * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
+     */
+    public int findOccurenceChemin(CaseType verifier) {
+
+        for (int i = 0; i < tab_chemin.length; i++) {
+            // verifier si on n'a pas déjà un chemin qui commence avec S_
+            if (tab_chemin[i].chemin_courant[0].type == verifier) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

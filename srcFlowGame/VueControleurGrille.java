@@ -47,12 +47,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
                         System.out.println("mousePressed : " + e.getSource());
 
-                        // jade
-                        // released = true;
-                        //jeu.construireChemin(ci,cj);
-
-                        // anne
-                            jeu.chemin.cheminStart(jeu.tab_jeu[ci][cj]);
+                        jeu.sourisCliquer(ci,cj);
                     }
 
 
@@ -61,14 +56,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                         currentComponent = (JComponent) e.getSource();
                         System.out.println("mouseEntered : " + e.getSource());
 
-                        // anne
                         jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
-
-                        // jade
-                        //  if(released == true){
-                        //    System.out.print("DEDANS");
-                        //   jeu.construireChemin(ci,cj);
-                        // }
                     }
 
                     @Override
@@ -76,17 +64,11 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // (**) - voir commentaire currentComponent
                         System.out.println("mouseReleased : " + currentComponent);
 
-                        // Anne
+
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
                         System.out.println("taille de chemin : "+jeu.chemin.taille_chemin_courant);
                         jeu.sourisRelacher();
 
-
-                        // code jade
-                        /* released = false;
-                          jeu.verif_chemin();
-                          jeu.chemin.afficherChemin();
-                        */
                     }
 
                 });
