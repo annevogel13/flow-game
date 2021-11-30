@@ -73,7 +73,7 @@ public class Jeux extends Observable {
         }
     }
 
-    public void verif_chemin(){
+    public void verif_chemin() throws CloneNotSupportedException {
         boolean bool1;
         boolean bool2;
         //1- on vérifie que la première et dernière case soient égales
@@ -85,36 +85,36 @@ public class Jeux extends Observable {
 
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
-            tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
-            tab_chemin[nombre_chemin].taille_chemin_courant = chemin.taille_chemin_courant;
 
-            nombre_chemin += 1;
+           // tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
+           // tab_chemin[nombre_chemin].taille_chemin_courant = chemin.taille_chemin_courant;
 
-            ajoute_chemin_a_tab_jeu(tab_chemin[nombre_chemin-1]);
+        Chemin chemin_clone = (Chemin) chemin.clone();
+        tab_chemin[nombre_chemin].chemin_courant = chemin_clone.chemin_courant;
+        tab_chemin[nombre_chemin].taille_chemin_courant = chemin_clone.taille_chemin_courant;
+        affichageCheminGrille();
+
+        nombre_chemin += 1;
+        ajoute_chemin_a_tab_jeu(chemin_clone);
+        //ajoute_chemin_a_tab_jeu(tab_chemin[nombre_chemin-1]);
+
+
 
          }
 
         chemin = new Chemin();
     }
 
+
+
     public void ajoute_chemin_a_tab_jeu(Chemin c){
 
-        for(int v = 0 ; v < 6; v++){
-            for(int j = 0 ; j < 6; j++){
 
-
-                System.out.print("-" + tab_jeu[v][j].type_chemin + " ");
-            }
-            System.out.println("\n");
-        }
-        System.out.println( " On ajoute les coord suivantes " + c.taille_chemin_courant);
         for(int i = 0; i < c.taille_chemin_courant; i++){
             int x = c.chemin_courant[i].x;
             int y = c.chemin_courant[i].y;
             tab_jeu[x][y].type = c.chemin_courant[i].type;
             tab_jeu[x][y].type_chemin = c.chemin_courant[i].type_chemin;
-
-
 
         }
         for(int v = 0 ; v < 6; v++){
@@ -268,7 +268,10 @@ public class Jeux extends Observable {
     /**
      * méthode qui règle toutes les réponses sur l'événement "mouseReleased"
      */
-    public void sourisRelacher(int ci, int cj){
+
+   // public void sourisRelacher(int ci, int cj){
+    public void sourisRelacher(int ci, int cj) throws CloneNotSupportedException {
+
 
         chemin.afficherChemin();
 

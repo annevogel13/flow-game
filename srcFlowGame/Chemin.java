@@ -1,4 +1,4 @@
-public class Chemin {
+public class Chemin implements Cloneable{
     CaseModele[] chemin_courant;
     int taille_chemin_courant;
     int TAILLE_MAX = 50;
@@ -16,6 +16,10 @@ public class Chemin {
             chemin_courant[i].type_chemin =CaseType.empty;
 
         }
+    }
+    @Override
+    public Chemin clone() throws CloneNotSupportedException {
+        return (Chemin)super.clone();
     }
 
     public boolean verif_chemin(){
