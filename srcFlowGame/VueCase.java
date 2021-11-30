@@ -15,8 +15,12 @@ public class VueCase extends JPanel {
     public CaseModele c;
 
     public VueCase(CaseModele cm) {
-
-        c = cm;
+        c = new CaseModele(cm.x, cm.y);
+        c.type_chemin = cm.type_chemin;
+        c.y = cm.y;
+        c.x = cm.x;
+        c.type = cm.type;
+        c.direction_case_suivante = cm.direction_case_suivante;
         chargement_images();
     }
 
@@ -41,38 +45,77 @@ public class VueCase extends JPanel {
 
 
 
-
     @Override
     public void paintComponent(Graphics g) {
+        //épaisseur du quadrillage
+        Graphics2D g2 = (Graphics2D) g;
+        float epaisseur = 3;
+        g2.setStroke(new BasicStroke(epaisseur));
 
+        //Dessin du quadrillage
         g.clearRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.white);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(Color.DARK_GRAY);
+        g.drawRect(0, 0, getWidth(), getHeight());
 
-        g.drawRoundRect(getWidth()/4, getHeight()/4, getWidth()/2, getHeight()/2, 5, 5);
 
         Rectangle2D deltaText =  g.getFont().getStringBounds("0", g.getFontMetrics().getFontRenderContext()); // "0" utilisé pour gabarit
 
+        //Centrage des images dans les cases (responsive)
+        double v = getWidth() * 0.78;
+        int dim = (int) v;
+
+        v = getWidth() * 0.11;
+        int centrer = (int) v;
+
+        //épaisseur des lignes (responsive)
+        v = getWidth() * 0.32;
+        epaisseur = (int) v;
+        g2.setStroke(new BasicStroke(epaisseur));
 
 
-                //TODO rajoute S6 - S9
+        if(c.type_chemin != CaseType.empty){
+            System.out.print(" FFFFF " + c.type_chemin);
+            set_couleur_lignes(g);
+        }
+
+
         switch(c.type) {
             case S1 :
-                g.drawImage(img0,0, 0, getWidth(), getHeight(), this);
+                 g.drawImage(img0,centrer, centrer, dim, dim, this);
                 //g.drawString("1", getWidth()/2 - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
                 break;
             case S2 :
-                g.drawImage(img1,0, 0, getWidth(), getHeight(), this);
+                g.drawImage(img1, centrer,centrer, dim, dim, this);
                 //g.drawString("2", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
                 break;
             case S3 :
-                g.drawImage(img2,0, 0, getWidth(), getHeight(), this);
+                g.drawImage(img2,centrer, centrer, dim, dim, this);
                 //g.drawString("3", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
                 break;
             case S4 :
-                g.drawImage(img3,0, 0, getWidth(), getHeight(), this);
+                g.drawImage(img3,centrer, centrer, dim, dim, this);
                 //g.drawString("4", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
                 break;
             case S5 :
-                g.drawImage(img4,0, 0, getWidth(), getHeight(), this);
+                g.drawImage(img4,centrer, centrer, dim,dim, this);
+                //g.drawString("5", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
+                break;
+            case S6 :
+                g.drawImage(img5,centrer, centrer, dim,dim, this);
+                //g.drawString("5", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
+                break;
+            case S7 :
+                g.drawImage(img6,centrer, centrer, dim,dim, this);
+                //g.drawString("5", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
+                break;
+            case S8 :
+                g.drawImage(img7,centrer, centrer, dim,dim, this);
+                //g.drawString("5", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
+                break;
+            case S9 :
+                g.drawImage(img8, centrer, centrer, dim,dim, this);
                 //g.drawString("5", getWidth()/2  - (int) deltaText.getCenterX(), getHeight()/2 - (int) deltaText.getCenterY());
                 break;
             case h0v0 :
@@ -107,20 +150,53 @@ public class VueCase extends JPanel {
                 break;
 
         }
-
-
-
     }
     public String toString() {
         return c.x + ", " + c.y;
 
     }
 
+
+    public void set_couleur_lignes(Graphics g){
+
+        System.out.print(" CHANGEMENT " + c.x + "," + c.y);
+        switch (c.type_chemin){
+            case S1 :
+                g.setColor(Color.decode("#a6d864")); //vert
+                break;
+            case S2 :
+                g.setColor(Color.decode("#659ad2")); //bleu
+                break;
+            case S3 :
+                g.setColor(Color.decode("#ffde00")); //jaune
+                break;
+            case S4 :
+                g.setColor(Color.decode("#984f97"));
+                break;
+            case S5 :
+                g.setColor(Color.decode("#d5be99"));
+                break;
+            case S6 :
+                g.setColor(Color.black);
+                break;
+            case S7 :
+                g.setColor(Color.orange);
+                break;
+            case S8 :
+                g.setColor(Color.pink);
+                break;
+            case S9:
+                g.setColor(Color.red);
+                break;
+        }
+    }
+
+
+
     public void chargement_images(){
-        System.out.println("dedans");
 
         try {
-            /*
+
             img0 = ImageIO.read(new File("../data/images/vert.png"));
             img1 = ImageIO.read(new File("../data/images/bleu.png"));
             img2 = ImageIO.read(new File("../data/images/jaune.png"));
@@ -130,8 +206,8 @@ public class VueCase extends JPanel {
             img6 = ImageIO.read(new File("../data/images/orange.jpg"));
             img7 = ImageIO.read(new File("../data/images/rose.png"));
             img8 = ImageIO.read(new File("../data/images/rouge.jpg"));
-            */
 
+/*
             img0 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\vert.png"));
             img1 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\bleu.png"));
             img2 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\jaune.png"));
@@ -141,7 +217,7 @@ public class VueCase extends JPanel {
             img6 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\orange.jpg"));
             img7 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rose.png"));
             img8 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rouge.jpg"));
-
+*/
 
         } catch (IOException e) {
             System.out.println("\nL'image ne pouvait pas charger. \n");

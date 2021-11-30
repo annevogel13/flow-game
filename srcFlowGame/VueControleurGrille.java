@@ -9,7 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class VueControleurGrille extends JFrame implements Observer{
-    private static final int PIXEL_PER_SQUARE = 60;
+    private static final int PIXEL_PER_SQUARE = 100;
     // tableau de cases : i, j -> case
     private VueCase[][] tabCV;
     // hashmap : case -> i, j
@@ -28,6 +28,7 @@ public class VueControleurGrille extends JFrame implements Observer{
 
         JPanel contentPane = new JPanel(new GridLayout(size, size));
 
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 final int ci = i;
@@ -42,8 +43,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                     public void mousePressed(MouseEvent e) {
                         // Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
                         // jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
-                        System.out.println("mousePressed : " + e.getSource());
-
+                        //System.out.println("mousePressed : " + e.getSource());
                         jeu.sourisCliquer(ci,cj);
                     }
 
@@ -51,19 +51,28 @@ public class VueControleurGrille extends JFrame implements Observer{
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         currentComponent = (JComponent) e.getSource();
-                        System.out.println("mouseEntered : " + e.getSource());
-
+                        //System.out.println("mouseEntered : " + e.getSource());
                         jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
                     }
 
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
-                        System.out.println("mouseReleased : " + currentComponent);
-
-
-                        System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
+                        //System.out.println("mouseReleased : " + currentComponent);
+                        //System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
                         jeu.sourisRelacher();
+
+                        for(int i = 0 ; i < tabCV.length; i++){
+                            for(int j = 0 ; j < tabCV.length; j++){
+                                tabCV[i][j].c.type = jeu.tab_jeu[i][j].type;
+                                tabCV[i][j].c.type_chemin = jeu.tab_jeu[i][j].type_chemin;
+                                tabCV[i][j].c.x = jeu.tab_jeu[i][j].x;
+                                tabCV[i][j].c.y = jeu.tab_jeu[i][j].y;
+
+                                System.out.print("   " + jeu.tab_jeu[i][j].type_chemin + " ");
+                            }
+                            System.out.println("\n");
+                        }
 
                     }
 
@@ -76,13 +85,15 @@ public class VueControleurGrille extends JFrame implements Observer{
 
     }
 
+
+
     @Override
     public void update(Observable o, Object arg) {
-
+    System.out.println(" \n \n");
         for (int i = 0; i < tabCV.length; i++) {
             for (int j = 0; j < tabCV.length; j++) {
+                 tabCV[i][j].repaint();
 
-                tabCV[i][j].repaint();
             }
         }
     }
@@ -93,4 +104,6 @@ public class VueControleurGrille extends JFrame implements Observer{
         jeu.addObserver(vue);
         vue.setVisible(true);
     }
+
+
 }

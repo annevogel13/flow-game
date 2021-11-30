@@ -1,10 +1,8 @@
-
-//ATTENTION quand on fait (1,2) ça fait en réalité (2,1) REPERE CHANGE
-
 public class Chemin {
     CaseModele[] chemin_courant;
     int taille_chemin_courant;
     int TAILLE_MAX = 50;
+
 
     public Chemin() {
         chemin_courant = new CaseModele[TAILLE_MAX];
@@ -14,6 +12,8 @@ public class Chemin {
 
             chemin_courant[i] = new CaseModele(0,0);
             chemin_courant[i].type = CaseType.empty;
+
+            chemin_courant[i].type_chemin =CaseType.empty;
 
         }
     }
@@ -58,7 +58,7 @@ public class Chemin {
     }
 
     public boolean prem_der_egales(){
-        System.out.print("\n " + chemin_courant[0].type +  " " + chemin_courant[taille_chemin_courant-1].x + "  " + chemin_courant[taille_chemin_courant-1].y + " " +chemin_courant[taille_chemin_courant-1].type );
+        //System.out.print("\n " + chemin_courant[0].type +  " " + chemin_courant[taille_chemin_courant-1].x + "  " + chemin_courant[taille_chemin_courant-1].y + " " +chemin_courant[taille_chemin_courant-1].type );
         if(chemin_courant[0].type == chemin_courant[taille_chemin_courant-1].type){
             return true;
         }else{
@@ -84,11 +84,11 @@ public class Chemin {
      * methode qui aide avec le debuggage
      */
     public void afficherChemin(){
-        System.out.print("{");
+        //System.out.print("{");
         for (int i = 0; i < 10; i++) {
-            System.out.print("{"+ chemin_courant[i].x+"," + chemin_courant[i].y+"}");
+            //System.out.print("{"+ chemin_courant[i].x+"," + chemin_courant[i].y+"}");
         }
-        System.out.print("} \n");
+        //System.out.print("} \n");
 
     }
 
@@ -96,9 +96,9 @@ public class Chemin {
      * methode qui aide avec le debuggage
      */
     public void afficherCheminTypes(){
-        System.out.println((taille_chemin_courant));
+        //System.out.println((taille_chemin_courant));
         for (int i = 0; i < taille_chemin_courant; i++) {
-            System.out.println("type de case "+i+ " est " + chemin_courant[i].type);
+            //System.out.println("type de case "+i+ " est " + chemin_courant[i].type);
         }
 
     }
@@ -112,7 +112,8 @@ public class Chemin {
         chemin_courant[taille_chemin_courant].x = cm.x;
         chemin_courant[taille_chemin_courant].y = cm.y;
         chemin_courant[taille_chemin_courant].type = cm.type;
-        taille_chemin_courant = taille_chemin_courant + 1;
+        chemin_courant[taille_chemin_courant].type_chemin = cm.type_chemin;
+        this.taille_chemin_courant = taille_chemin_courant + 1;
 
     }
 
@@ -135,17 +136,18 @@ public class Chemin {
      */
     public void cheminReste(CaseModele cm){
         // verifier si le chemin a commencé sur un type S_ (le premiere case de tableaux remplit
+        cm.type_chemin = chemin_courant[0].type;
+
         if(chemin_courant[0].type != CaseType.empty){
 
             // verifier si le case vide et peut du coup faire partie d'un chemin
             if(cm.type == CaseType.empty){
-
                 ajouteCase(cm);
-
+                System.out.println("Chemin type : " + cm.type_chemin);
             }else {
                 // verifier si cm est le fin d'un chemin
                 if (cm.type == chemin_courant[0].type) {
-                    System.out.println("(Debut, Fin) de " + cm.type);
+                    //System.out.println("(Debut, Fin) de " + cm.type);
 
                     ajouteCase(cm);
                 }
@@ -198,4 +200,10 @@ public class Chemin {
             if((cm1.x + 1 == cm3.x)&&(cm1.y - 1 == cm3.y)){ tab_jeu[cm2.x][cm2.y].type = CaseType.h1v1; }
         }
     }
+
 }
+
+
+
+
+//ATTENTION quand on fait (1,2) ça fait en réalité (2,1) REPERE CHANGE

@@ -13,6 +13,7 @@ public class Jeux extends Observable {
     public int MAX_CHEMIN = 9;
     public int nombre_chemin;
     public Chemin chemin;
+
     public Chemin [] tab_chemin;
     public String [][]tab_chemins;
     public String [][]tab_joueur;
@@ -60,12 +61,11 @@ public class Jeux extends Observable {
      * méthode qui parcour le chemin_courante et en déduit le type des cases dans chemin_courante
      */
     public void affichageCheminGrille() {
-        // de chemin_courant[1] jusqua l'avant derniere
+        // de chemin_courant[1] jusqua l'avant dernier
         for (int i = 1; i < chemin.taille_chemin_courant - 1; i++) {
 
             chemin.troisCaseDeduireType(chemin.chemin_courant[i - 1], chemin.chemin_courant[i], chemin.chemin_courant[i + 1], tab_jeu);
             chemin.chemin_courant[i].type = tab_jeu[chemin.chemin_courant[i].x][chemin.chemin_courant[i].y].type;
-
            // System.out.println("change " + chemin.chemin_courant[i].x + "," + chemin.chemin_courant[i].y + " en " + chemin.chemin_courant[i].type);
 
             setChanged();
@@ -90,14 +90,49 @@ public class Jeux extends Observable {
 
             nombre_chemin += 1;
 
-        }
+            ajoute_chemin_a_tab_jeu(tab_chemin[nombre_chemin-1]);
+
+         }
+
+
+
         chemin = new Chemin();
+    }
+
+    public void ajoute_chemin_a_tab_jeu(Chemin c){
+
+        for(int v = 0 ; v < 6; v++){
+            for(int j = 0 ; j < 6; j++){
+
+
+                System.out.print("-" + tab_jeu[v][j].type_chemin + " ");
+            }
+            System.out.println("\n");
+        }
+        System.out.println( " On ajoute les coord suivantes " + c.taille_chemin_courant);
+        for(int i = 0; i < c.taille_chemin_courant; i++){
+            int x = c.chemin_courant[i].x;
+            int y = c.chemin_courant[i].y;
+            tab_jeu[x][y].type = c.chemin_courant[i].type;
+            tab_jeu[x][y].type_chemin = c.chemin_courant[i].type_chemin;
+
+
+
+        }
+        for(int v = 0 ; v < 6; v++){
+            for(int j = 0 ; j < 6; j++){
+
+
+                System.out.print("_" + tab_jeu[v][j].type_chemin + " ");
+            }
+            System.out.println("\n");
+        }
     }
 
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; //"../data/grilles.txt";
+        String fichier = "../data/grilles.txt"; //"C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt";
         String ligne;
 
         // lit le fichier ligne par ligne
@@ -292,6 +327,7 @@ public class Jeux extends Observable {
             int x = tab_chemin[indice].chemin_courant[i].x;
             int y = tab_chemin[indice].chemin_courant[i].y;
             tab_jeu[x][y].type = CaseType.empty;
+
         }
 
         // enlever le chemin du tableau de chemins
