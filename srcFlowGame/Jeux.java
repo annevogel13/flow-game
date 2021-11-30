@@ -61,7 +61,7 @@ public class Jeux extends Observable {
      * méthode qui parcour le chemin_courante et en déduit le type des cases dans chemin_courante
      */
     public void affichageCheminGrille() {
-        // de chemin_courant[1] jusqua l'avant dernier
+        // de chemin_courant[1] jusqua l'avant-dernier
         for (int i = 1; i < chemin.taille_chemin_courant - 1; i++) {
 
             chemin.troisCaseDeduireType(chemin.chemin_courant[i - 1], chemin.chemin_courant[i], chemin.chemin_courant[i + 1], tab_jeu);
@@ -94,8 +94,6 @@ public class Jeux extends Observable {
 
          }
 
-
-
         chemin = new Chemin();
     }
 
@@ -122,7 +120,6 @@ public class Jeux extends Observable {
         for(int v = 0 ; v < 6; v++){
             for(int j = 0 ; j < 6; j++){
 
-
                 System.out.print("_" + tab_jeu[v][j].type_chemin + " ");
             }
             System.out.println("\n");
@@ -132,7 +129,7 @@ public class Jeux extends Observable {
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "../data/grilles.txt"; //"C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt";
+        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; // "../data/grilles.txt";
         String ligne;
 
         // lit le fichier ligne par ligne
@@ -271,21 +268,39 @@ public class Jeux extends Observable {
     /**
      * méthode qui règle toutes les réponses sur l'événement "mouseReleased"
      */
-    public void sourisRelacher(){
+    public void sourisRelacher(int ci, int cj){
 
         chemin.afficherChemin();
-        // verifier si ce type de case S_ est deja dans le tab_chemin et si le chemin va bien de S_ à S_
+
+        // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
         if (!checkOccurenceChemin(chemin.chemin_courant[0].type) && chemin.prem_der_egales()) {
 
-            // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans le fonction)
+            // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
             verif_chemin();
 
-        } else {
+        } else if((chemin.taille_chemin_courant == 0)&& (testEtat(chemin.chemin_courant[0].type))){ // veut dire qu'on a cliqué et relache sur le même case
+                // veut dire qu'on veut supprimer le chemin, après on verifier que le S_ appartient bien dans le tab_chemin[]
+                if(checkOccurenceChemin(chemin.chemin_courant[0].type)){
+                    modificationSupprimer(tab_jeu[ci][cj].type);
+                }
+
+                chemin = new Chemin();
+
+        }else {
             // on remet le chemin_courante à 0
             chemin = new Chemin();
             // afficher le tableau des chemins
             afficherTabChemin();
         }
+    }
+
+    // verifier si une etat est en forme de S_
+    public boolean testEtat(CaseType T){
+
+        return switch (T) {
+            case S1, S2, S3, S4, S5, S6, S7, S8 -> true;
+            default -> false;
+        };
     }
 
     /**
@@ -294,6 +309,8 @@ public class Jeux extends Observable {
      * @param cj coördinate y de case tab_jeu ou le soursi a cliqué
      */
     public void sourisCliquer(int ci, int cj){
+
+        /* essayer d'une autre manière
         // verifier si on a déjà créé un chemin qui commence avec ce type
         if(checkOccurenceChemin(tab_jeu[ci][cj].type)) {
             // si vrai, on supprime le vieux chemin
@@ -306,7 +323,7 @@ public class Jeux extends Observable {
             System.out.println("On n'a pas le droit de commencer sur cette case");
             chemin = new Chemin();
             // autrement on commence un nouveau chemin
-        }else chemin.cheminStart(tab_jeu[ci][cj]);
+        }else */ chemin.cheminStart(tab_jeu[ci][cj]);
 
     }
     //TODO bug troisieme clique delete
@@ -315,7 +332,10 @@ public class Jeux extends Observable {
      * @param cheminType le type de chemin qu'on veut supprimer
      */
     private void modificationSupprimer(CaseType cheminType) {
+
         int indice = findOccurenceChemin(cheminType);
+        // double verification que l'indice depasse pas le tab_chemin[]
+        assert (indice < chemin.taille_chemin_courant -1 );
         // double verification que les deux types sont le même
         assert (cheminType == tab_chemin[indice].chemin_courant[0].type);
 
@@ -361,6 +381,7 @@ public class Jeux extends Observable {
         int i = indiceDansTabChemin ;
         do{
             // on deplace tous les chemins une à gauche dans le tab_chemin
+            // TODO verifier si ça fonctionne bien
             tab_chemin[i] = tab_chemin[i+1];
             i++;
         }while(i < nombre_chemin);
@@ -375,12 +396,19 @@ public class Jeux extends Observable {
      * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
      */
     public boolean checkOccurenceChemin(CaseType verifier) {
-        for (Chemin value : tab_chemin) {
+
+        // verifier si le type est bien S_
+        if(testEtat(verifier)) {
+
+            // on parcour le tab_chemin
+            for (Chemin value : tab_chemin) {
+
                 // verifier si on n'a pas déjà un chemin qui commence avec S_
                 if (value.chemin_courant[0].type == verifier) {
                     return true;
                 }
             }
+        }
 
         return false;
     }
@@ -390,7 +418,6 @@ public class Jeux extends Observable {
      * @return vrai si le chemin est dans le tab_chemin[], return false si le chemin n'est PAS dans le tab_chemin[]
      */
     public int findOccurenceChemin(CaseType verifier) {
-
 
         for (int i = 0; i < tab_chemin.length; i++) {
             // verifier si on n'a pas déjà un chemin qui commence avec S_
@@ -410,6 +437,5 @@ public class Jeux extends Observable {
             tab_chemin[m].afficherChemin();
         }
     }
-
 
 }

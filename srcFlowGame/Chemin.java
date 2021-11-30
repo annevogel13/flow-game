@@ -11,8 +11,8 @@ public class Chemin {
         for(int i = 0; i < TAILLE_MAX; i++){
 
             chemin_courant[i] = new CaseModele(0,0);
-            chemin_courant[i].type = CaseType.empty;
 
+            chemin_courant[i].type = CaseType.empty;
             chemin_courant[i].type_chemin =CaseType.empty;
 
         }
@@ -148,7 +148,6 @@ public class Chemin {
                 // verifier si cm est le fin d'un chemin
                 if (cm.type == chemin_courant[0].type) {
                     //System.out.println("(Debut, Fin) de " + cm.type);
-
                     ajouteCase(cm);
                 }
             }
@@ -169,11 +168,12 @@ public class Chemin {
                 h0 -- -- h1
                      |
                      v1
-                           h --> v                             v --> h
-                    h0v0 x+1 y-1 && cm1.y == cm2.y   ||  x-1 y+1 && cm2.y == cm3.y
-                    h0v1 x+1 y+1 && cm1.y == cm2.y   ||  x-1 y-1 && cm2.y == cm3.y
-                    h1v0 x-1 y-1 && cm1.y == cm2.y   ||  x+1 y+1 && cm2.y == cm3.y
-                    h1v1 x-1 y+1 && cm1.y == cm2.y   ||  x+1 x-1 && cm2.y == cm3.y
+
+                     h --> v                         v --> h
+          h0v0 x+1 y-1 && cm1.y == cm2.y   ||  x-1 y+1 && cm2.y == cm3.y
+          h0v1 x+1 y+1 && cm1.y == cm2.y   ||  x-1 y-1 && cm2.y == cm3.y
+          h1v0 x-1 y-1 && cm1.y == cm2.y   ||  x+1 y+1 && cm2.y == cm3.y
+          h1v1 x-1 y+1 && cm1.y == cm2.y   ||  x+1 x-1 && cm2.y == cm3.y
         */
 
         // h0h1, v0v1

@@ -196,7 +196,7 @@ public class VueCase extends JPanel {
     public void chargement_images(){
 
         try {
-
+        /*
             img0 = ImageIO.read(new File("../data/images/vert.png"));
             img1 = ImageIO.read(new File("../data/images/bleu.png"));
             img2 = ImageIO.read(new File("../data/images/jaune.png"));
@@ -206,8 +206,8 @@ public class VueCase extends JPanel {
             img6 = ImageIO.read(new File("../data/images/orange.jpg"));
             img7 = ImageIO.read(new File("../data/images/rose.png"));
             img8 = ImageIO.read(new File("../data/images/rouge.jpg"));
+        */
 
-/*
             img0 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\vert.png"));
             img1 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\bleu.png"));
             img2 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\jaune.png"));
@@ -217,17 +217,12 @@ public class VueCase extends JPanel {
             img6 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\orange.jpg"));
             img7 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rose.png"));
             img8 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rouge.jpg"));
-*/
+
 
         } catch (IOException e) {
             System.out.println("\nL'image ne pouvait pas charger. \n");
         }
 
-
-
-
-
     }
-
 
 }
