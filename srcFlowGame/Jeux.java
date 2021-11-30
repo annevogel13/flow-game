@@ -82,11 +82,11 @@ public class Jeux extends Observable {
         bool2 = chemin.verif_chemin();
 
         System.out.print( " ===> "+ bool1 + " " +bool2+"\n");
+
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
             tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
             tab_chemin[nombre_chemin].taille_chemin_courant = chemin.taille_chemin_courant;
-            affichageCheminGrille();
 
             nombre_chemin += 1;
 
@@ -274,7 +274,7 @@ public class Jeux extends Observable {
         }else chemin.cheminStart(tab_jeu[ci][cj]);
 
     }
-
+    //TODO bug troisieme clique delete
     /**
      * méthode qui fait les modifications necessaire quand on supprime un chemin de type
      * @param cheminType le type de chemin qu'on veut supprimer
