@@ -60,7 +60,11 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // (**) - voir commentaire currentComponent
                         //System.out.println("mouseReleased : " + currentComponent);
                         //System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
-                        jeu.sourisRelacher();
+                        try {
+                            jeu.sourisRelacher();
+                        } catch (CloneNotSupportedException ex) {
+                            ex.printStackTrace();
+                        }
 
                         for(int i = 0 ; i < tabCV.length; i++){
                             for(int j = 0 ; j < tabCV.length; j++){
