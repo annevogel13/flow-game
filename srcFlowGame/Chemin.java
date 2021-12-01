@@ -150,7 +150,7 @@ public class Chemin implements Cloneable{
             if(cm.type == CaseType.empty){
                 cm.type_chemin = chemin_courant[0].type;
                 ajouteCase(cm);
-                System.out.println("Chemin type : " + cm.type_chemin);
+
             }else {
                 // verifier si cm est le fin d'un chemin
                 if (cm.type == chemin_courant[0].type) {

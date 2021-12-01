@@ -76,7 +76,6 @@ public class VueCase extends JPanel {
 
 
         if(c.type_chemin != CaseType.empty){
-            System.out.print(" FFFFF " + c.type_chemin);
             set_couleur_lignes(g);
         }
 
@@ -159,7 +158,7 @@ public class VueCase extends JPanel {
 
     public void set_couleur_lignes(Graphics g){
 
-        System.out.print(" CHANGEMENT " + c.x + "," + c.y);
+
         switch (c.type_chemin){
             case S1 :
                 g.setColor(Color.decode("#a6d864")); //vert
@@ -180,13 +179,13 @@ public class VueCase extends JPanel {
                 g.setColor(Color.black);
                 break;
             case S7 :
-                g.setColor(Color.orange);
+                g.setColor(Color.decode("#e69a1c"));
                 break;
             case S8 :
-                g.setColor(Color.pink);
+                g.setColor(Color.decode("#db3970"));
                 break;
             case S9:
-                g.setColor(Color.red);
+                g.setColor(Color.decode("#e54d26"));
                 break;
         }
     }

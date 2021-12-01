@@ -82,9 +82,8 @@ public class VueControleurGrille extends JFrame implements Observer{
                                 tabCV[i][j].c.x = jeu.tab_jeu[i][j].x;
                                 tabCV[i][j].c.y = jeu.tab_jeu[i][j].y;
 
-                                System.out.print("   " + jeu.tab_jeu[i][j].type_chemin + " ");
                             }
-                            System.out.println("\n");
+
                         }
 
                     }

@@ -10,7 +10,7 @@ public class Jeux extends Observable {
     public int nbr_formes;
 
     // Chemin
-    public int MAX_CHEMIN = 9;
+    public int MAX_CHEMIN = 12;
     public int nombre_chemin;
     public Chemin chemin;
 
@@ -81,7 +81,6 @@ public class Jeux extends Observable {
         //2 - on vérifie que les cases se suivent
         bool2 = chemin.verif_chemin();
 
-        System.out.print( " ===> "+ bool1 + " " +bool2+"\n");
 
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
@@ -116,13 +115,6 @@ public class Jeux extends Observable {
             tab_jeu[x][y].type = c.chemin_courant[i].type;
             tab_jeu[x][y].type_chemin = c.chemin_courant[i].type_chemin;
 
-        }
-        for(int v = 0 ; v < 6; v++){
-            for(int j = 0 ; j < 6; j++){
-
-                System.out.print("_" + tab_jeu[v][j].type_chemin + " ");
-            }
-            System.out.println("\n");
         }
     }
 
@@ -169,6 +161,7 @@ public class Jeux extends Observable {
                     }
 
                     //vérifications
+                    /*
                     System.out.print( "\n  Jeu choisi : dimension = " + this.size + " niveau = " + this.niveau + " nbr de formes à relier = " + this.nbr_formes);
                     System.out.print("\n \n Version avec solutions : \n \n");
                     for (int i = 0 ; i < this.size ; i++){
@@ -178,6 +171,8 @@ public class Jeux extends Observable {
                         }
                         System.out.print("\n");
                     }
+
+                     */
                 }
             }
             br.close(); // On ferme le flux
@@ -230,6 +225,7 @@ public class Jeux extends Observable {
         }
 
         //vérification
+        /*
         System.out.print("\n \n Version joueur début de jeu : \n \n");
         for(int i = 0; i < this.size; i++){
             for(int j=0 ; j < this.size; j++ ){
@@ -237,6 +233,8 @@ public class Jeux extends Observable {
             }
             System.out.print("\n");
         }
+
+         */
     }
 
     public void init_tab_jeu(){
