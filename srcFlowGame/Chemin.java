@@ -33,10 +33,10 @@ public class Chemin implements Cloneable{
 
     public boolean verif_case_voisine(CaseModele c, CaseModele c_suivante){
         CaseModele[] tab_case_voisine = new CaseModele[4];
-        tab_case_voisine[0]= new CaseModele(c.x - 1,  c.y + 0); //haut
-        tab_case_voisine[1]= new CaseModele(c.x + 0,  c.y + 1); //droit
-        tab_case_voisine[2]= new CaseModele(c.x + 1,  c.y + 0); //bas
-        tab_case_voisine[3]= new CaseModele(c.x + 0,  c.y - 1); //gauche
+        tab_case_voisine[0]= new CaseModele(c.x - 1,  c.y); //haut
+        tab_case_voisine[1]= new CaseModele(c.x,  c.y + 1); //droit
+        tab_case_voisine[2]= new CaseModele(c.x + 1,  c.y ); //bas
+        tab_case_voisine[3]= new CaseModele(c.x ,  c.y - 1); //gauche
 
         // droite = 1, gauche = -1, haut = 2, bas = -2
         if((compare_deux_cases(tab_case_voisine[0], c_suivante))){
@@ -64,11 +64,8 @@ public class Chemin implements Cloneable{
         //System.out.print("\n " + chemin_courant[0].type +  " " + chemin_courant[taille_chemin_courant-1].x + "  " + chemin_courant[taille_chemin_courant-1].y + " " +chemin_courant[taille_chemin_courant-1].type );
         if(taille_chemin_courant ==0){ return false ; }
 
-        if(chemin_courant[0].type == chemin_courant[taille_chemin_courant-1].type){
-            return true;
-        }else{
-            return false;
-        }
+        return chemin_courant[0].type == chemin_courant[taille_chemin_courant-1].type;
+
     }
 
     public boolean compare_deux_cases(CaseModele c1, CaseModele c2){
@@ -85,28 +82,6 @@ public class Chemin implements Cloneable{
         }
     }
 
-    /**
-     * methode qui aide avec le debuggage
-     */
-    public void afficherChemin(){
-        //System.out.print("{");
-        for (int i = 0; i < 10; i++) {
-            //System.out.print("{"+ chemin_courant[i].x+"," + chemin_courant[i].y+"}");
-        }
-        //System.out.print("} \n");
-
-    }
-
-    /**
-     * methode qui aide avec le debuggage
-     */
-    public void afficherCheminTypes(){
-        //System.out.println((taille_chemin_courant));
-        for (int i = 0; i < taille_chemin_courant; i++) {
-            //System.out.println("type de case "+i+ " est " + chemin_courant[i].type);
-        }
-
-    }
 
     /**
      * ajout une caseModele au chemin
@@ -141,8 +116,6 @@ public class Chemin implements Cloneable{
      */
     public void cheminReste(CaseModele cm){
         // verifier si le chemin a commencé sur un type S_ (le premiere case de tableaux remplit
-
-
         if(chemin_courant[0].type != CaseType.empty){
 
             // verifier si le case vide et peut du coup faire partie d'un chemin
@@ -207,4 +180,32 @@ public class Chemin implements Cloneable{
         }
     }
 
+    /**
+     * méthode qui renvoie vrai si on a une case en double dans le chemin_courante
+     * @return vrai s'il y a une double, faux si non
+     */
+    public boolean checkDoubleCaseDansChemin() {
+        // on parcour tout le tablau pour verifier si on n'a pas une case en double
+        for (int j = 0; j < taille_chemin_courant - 1; j++) {
+            for (int i = 0; i < taille_chemin_courant; i++) {
+                // on traite seulement les cases ou i et j sont différents
+                if (!(i == j)) {
+
+                    boolean x = chemin_courant[j].x == chemin_courant[i].x;
+                    boolean y = chemin_courant[j].y == chemin_courant[i].y;
+                    // x == true , y == true nécessaire, parce qu'on ne veut pas que faux && faux retourne vrai
+                    // on veut retourner vrai seulement si x et y sont vrai
+                    if((x == true) && (y == true)){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }
+
+
+
+

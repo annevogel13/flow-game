@@ -10,7 +10,6 @@ public class Jeux extends Observable {
     public int nbr_formes;
 
     // Chemin
-
     public int MAX_CHEMIN = 12;
     public int nombre_chemin;
     public Chemin chemin;
@@ -114,7 +113,7 @@ public class Jeux extends Observable {
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "../data/grilles.txt"; //"C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt";
+        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; // "../data/grilles.txt";
         String ligne;
 
         // lit le fichier ligne par ligne
@@ -154,19 +153,9 @@ public class Jeux extends Observable {
                     }
 
                     //vérifications
-                    /*
                     System.out.print( "\n  Jeu choisi : dimension = " + this.size + " niveau = " + this.niveau + " nbr de formes à relier = " + this.nbr_formes);
                     System.out.print("\n \n Version avec solutions : \n \n");
-                   /* for (int i = 0 ; i < this.size ; i++){
-                        for(int j = 0; j < this.size ; j++){
-                            System.out.print(this.tab_chemins[i][j]);
-                            System.out.print(" ");
-                        }
-                        System.out.print("\n");
 
-                    }
-
-                     */
 
                 }
             }
@@ -220,16 +209,9 @@ public class Jeux extends Observable {
         }
 
         //vérification
-        /*
-        System.out.print("\n \n Version joueur début de jeu : \n \n");
-        for(int i = 0; i < this.size; i++){
-            for(int j=0 ; j < this.size; j++ ){
-                System.out.print(tab_joueur[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
 
-         */
+        System.out.print("\n \n Version joueur début de jeu : \n \n");
+
     }
 
     public void init_tab_jeu(){
@@ -261,24 +243,13 @@ public class Jeux extends Observable {
      */
     public void sourisRelacher(int ci, int cj) throws CloneNotSupportedException {
 
-        chemin.afficherChemin();
-
         // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
         if (!(checkOccurenceChemin(chemin.chemin_courant[0].type)) && chemin.prem_der_egales()) {
 
-                for(int i = 1; i< chemin.taille_chemin_courant; i++){
-                    boolean x = chemin.chemin_courant[0].x == chemin.chemin_courant[i].x;
-                    boolean y = chemin.chemin_courant[0].y == chemin.chemin_courant[i].y;
-                    boolean type = chemin.chemin_courant[0].type == chemin.chemin_courant[i].type;
-                    if( (x && y) && type){
-                        System.out.println("275 on repasse sur le même case");
-                        chemin = new Chemin();
-                    }
-                }
-
-                // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
-                verif_chemin();
-
+                if(!chemin.checkDoubleCaseDansChemin()) {
+                    // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
+                    verif_chemin();
+                }else chemin = new Chemin();
         } else{
             // on remet le chemin_courante à 0
             chemin = new Chemin();
@@ -288,6 +259,11 @@ public class Jeux extends Observable {
 
         setChanged();
         notifyObservers();
+
+        if(finPartie()){
+            System.out.println(" FIN PARTIE , FÉlÉCITATION");
+        }
+
     }
 
 
@@ -423,8 +399,28 @@ public class Jeux extends Observable {
      */
     public void afficherTabChemin(){
         for (int m = 0; m < nombre_chemin; m++) {
-            tab_chemin[m].afficherChemin();
+           // tab_chemin[m].afficherChemin();
         }
     }
 
+    /**
+     * méthode qui verifié si la partie est termininée
+     * - test si toutes les cases sont remplies
+     * - test si tous les S_ sont connectées
+     * @return vrai si terminee, faux sinon
+     */
+    public boolean finPartie(){
+
+        // controler partie : si toutes les cases sont remplies
+        for(int i = 0 ; i < size; i++){
+            for(int j =0 ; j< size; j++){
+                if(tab_jeu[i][j].type == CaseType.empty){
+                    return false;
+                }
+            }
+        }
+
+        return nombre_chemin == nbr_formes ;
+
+    }
 }

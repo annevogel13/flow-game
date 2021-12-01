@@ -43,7 +43,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                     public void mousePressed(MouseEvent e) {
                         // Point p = hashmap.get(e.getSource()); // (*) permet de récupérer les coordonnées d'une caseVue
                         // jeu.rnd(ci, cj);    // remplace --> ((VueCase) e.getSource()).rndType();
-                        //System.out.println("mousePressed : " + e.getSource());
+                        System.out.println("mousePressed : " + e.getSource());
                         try {
                             jeu.sourisCliquer(ci,cj);
                         } catch (CloneNotSupportedException ex) {
@@ -55,7 +55,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         currentComponent = (JComponent) e.getSource();
-                        //System.out.println("mouseEntered : " + e.getSource());
+                        System.out.println("mouseEntered : " + e.getSource());
                         jeu.chemin.cheminReste(jeu.tab_jeu[ci][cj]);
                     }
 
@@ -63,7 +63,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                     public void mouseReleased(MouseEvent e) {
                         // (**) - voir commentaire currentComponent
                         //System.out.println("mouseReleased : " + currentComponent);
-                        //System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
+                        System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
 
                         // code d'avant jeu.sourisRelacher(ci,cj);
 
