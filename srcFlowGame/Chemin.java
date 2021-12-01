@@ -63,6 +63,8 @@ public class Chemin implements Cloneable{
 
     public boolean prem_der_egales(){
         //System.out.print("\n " + chemin_courant[0].type +  " " + chemin_courant[taille_chemin_courant-1].x + "  " + chemin_courant[taille_chemin_courant-1].y + " " +chemin_courant[taille_chemin_courant-1].type );
+        if(taille_chemin_courant ==0){ return false ; }
+
         if(chemin_courant[0].type == chemin_courant[taille_chemin_courant-1].type){
             return true;
         }else{

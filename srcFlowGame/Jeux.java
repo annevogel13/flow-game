@@ -272,29 +272,34 @@ public class Jeux extends Observable {
    // public void sourisRelacher(int ci, int cj){
     public void sourisRelacher(int ci, int cj) throws CloneNotSupportedException {
 
-
         chemin.afficherChemin();
 
         // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
-        if (!checkOccurenceChemin(chemin.chemin_courant[0].type) && chemin.prem_der_egales()) {
+        if (!(checkOccurenceChemin(chemin.chemin_courant[0].type)) && chemin.prem_der_egales()) {
 
             // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
             verif_chemin();
 
-        } else if((chemin.taille_chemin_courant == 0)&& (testEtat(chemin.chemin_courant[0].type))){ // veut dire qu'on a cliqué et relache sur le même case
+        } else /* if((chemin.taille_chemin_courant == 0)&& (testEtat(chemin.chemin_courant[0].type))){ // veut dire qu'on a cliqué et relache sur le même case
                 // veut dire qu'on veut supprimer le chemin, après on verifier que le S_ appartient bien dans le tab_chemin[]
+                System.out.println("detuire chemin");
                 if(checkOccurenceChemin(chemin.chemin_courant[0].type)){
+
                     modificationSupprimer(tab_jeu[ci][cj].type);
+
                 }
 
                 chemin = new Chemin();
 
-        }else {
+        } else*/{
             // on remet le chemin_courante à 0
             chemin = new Chemin();
             // afficher le tableau des chemins
             afficherTabChemin();
         }
+
+        setChanged();
+        notifyObservers();
     }
 
     // verifier si une etat est en forme de S_
@@ -311,30 +316,31 @@ public class Jeux extends Observable {
      * @param ci coördinate x de case tab_jeu ou le soursi a cliqué
      * @param cj coördinate y de case tab_jeu ou le soursi a cliqué
      */
-    public void sourisCliquer(int ci, int cj){
+    public void sourisCliquer(int ci, int cj) throws CloneNotSupportedException {
 
-        /* essayer d'une autre manière
+        // essayer d'une autre manière
         // verifier si on a déjà créé un chemin qui commence avec ce type
         if(checkOccurenceChemin(tab_jeu[ci][cj].type)) {
             // si vrai, on supprime le vieux chemin
-            modificationSupprimer(tab_jeu[ci][cj].type);
-            // et on rémets le chemin_courant à 0
-            chemin = new Chemin();
-
+                modificationSupprimer(tab_jeu[ci][cj].type);
+                // et on rémets le chemin_courant à 0
+                chemin = new Chemin();
+                setChanged();
+                notifyObservers();
             // si on essaye de comménce un chemin sur une case vide, on affiche un message dans la console
         } else if(tab_jeu[ci][cj].type == CaseType.empty){
             System.out.println("On n'a pas le droit de commencer sur cette case");
             chemin = new Chemin();
             // autrement on commence un nouveau chemin
-        }else */ chemin.cheminStart(tab_jeu[ci][cj]);
+        }else chemin.cheminStart(tab_jeu[ci][cj]);
 
     }
-    //TODO bug troisieme clique delete
+
     /**
      * méthode qui fait les modifications necessaire quand on supprime un chemin de type
      * @param cheminType le type de chemin qu'on veut supprimer
      */
-    private void modificationSupprimer(CaseType cheminType) {
+    private void modificationSupprimer(CaseType cheminType) throws CloneNotSupportedException {
 
         int indice = findOccurenceChemin(cheminType);
         // double verification que l'indice depasse pas le tab_chemin[]
@@ -350,7 +356,7 @@ public class Jeux extends Observable {
             int x = tab_chemin[indice].chemin_courant[i].x;
             int y = tab_chemin[indice].chemin_courant[i].y;
             tab_jeu[x][y].type = CaseType.empty;
-
+            tab_jeu[x][y].type_chemin = CaseType.empty;
         }
 
         // enlever le chemin du tableau de chemins
@@ -364,18 +370,18 @@ public class Jeux extends Observable {
     /**
      * méthode qui enleve la dernière chemin crée avec un bouton undo
      */
-    public void enleverDerniereChemin(){
+    /* public void enleverDerniereChemin(){
 
         CaseType typeASupprimer = tab_chemin[nombre_chemin-1].chemin_courant[0].type;
         modificationSupprimer(typeASupprimer);
 
-    }
+    } */
 
     /**
      * méthode qui enleve un chemin specifique dans le tab_chemin (quand on clique sur l'icone)
      * * @param indiceDansTabChemin l'indice de chemin dans tab_chemin qui doit être supprimé
      */
-    public void enleverCheminSpecifique(int indiceDansTabChemin){
+    public void enleverCheminSpecifique(int indiceDansTabChemin) throws CloneNotSupportedException {
 
         // on remplace le chemin par un nouveau chemin (donc vide)
         tab_chemin[indiceDansTabChemin] = new Chemin();
@@ -385,7 +391,7 @@ public class Jeux extends Observable {
         do{
             // on deplace tous les chemins une à gauche dans le tab_chemin
             // TODO verifier si ça fonctionne bien
-            tab_chemin[i] = tab_chemin[i+1];
+            tab_chemin[i] = tab_chemin[i+1].clone();
             i++;
         }while(i < nombre_chemin);
         nombre_chemin = nombre_chemin -1 ;
