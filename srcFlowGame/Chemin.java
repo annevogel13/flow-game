@@ -142,12 +142,13 @@ public class Chemin implements Cloneable{
      */
     public void cheminReste(CaseModele cm){
         // verifier si le chemin a commencé sur un type S_ (le premiere case de tableaux remplit
-        cm.type_chemin = chemin_courant[0].type;
+
 
         if(chemin_courant[0].type != CaseType.empty){
 
             // verifier si le case vide et peut du coup faire partie d'un chemin
             if(cm.type == CaseType.empty){
+                cm.type_chemin = chemin_courant[0].type;
                 ajouteCase(cm);
                 System.out.println("Chemin type : " + cm.type_chemin);
             }else {

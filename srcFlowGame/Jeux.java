@@ -129,7 +129,7 @@ public class Jeux extends Observable {
     public void lire_fichier_texte(String s) throws IOException {
 
         String chaine ="";
-        String fichier = "C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt"; // "../data/grilles.txt";
+        String fichier = "../data/grilles.txt"; //"C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\grilles.txt";
         String ligne;
 
         // lit le fichier ligne par ligne
