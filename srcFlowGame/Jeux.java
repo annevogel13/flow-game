@@ -239,30 +239,28 @@ public class Jeux extends Observable {
     }
 
     /**
-     * méthode qui règle toutes les réponses sur l'événement "mouseReleased"
+     * méthode qui régle tous les événements par apport à souris relacher
+     * @throws CloneNotSupportedException
      */
-    public void sourisRelacher(int ci, int cj) throws CloneNotSupportedException {
+    public void sourisRelacher() throws CloneNotSupportedException {
+        if(!finPartie()) {
+            // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
+            if (!(checkOccurenceChemin(chemin.chemin_courant[0].type)) && chemin.prem_der_egales()) {
 
-        // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
-        if (!(checkOccurenceChemin(chemin.chemin_courant[0].type)) && chemin.prem_der_egales()) {
-
-                if(!chemin.checkDoubleCaseDansChemin()) {
+                if (!chemin.checkDoubleCaseDansChemin()) {
                     // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
                     verif_chemin();
-                }else chemin = new Chemin();
-        } else{
-            // on remet le chemin_courante à 0
-            chemin = new Chemin();
-            // afficher le tableau des chemins
-            afficherTabChemin();
-        }
+                } else chemin = new Chemin();
+            } else {
+                // on remet le chemin_courante à 0
+                chemin = new Chemin();
 
-        setChanged();
-        notifyObservers();
+            }
 
-        if(finPartie()){
-            System.out.println(" FIN PARTIE , FÉlÉCITATION");
-        }
+            setChanged();
+            notifyObservers();
+
+        }else System.out.println(" FIN PARTIE , FÉlÉCITATION");
 
     }
 
@@ -282,24 +280,26 @@ public class Jeux extends Observable {
      * @param cj coördinate y de case tab_jeu ou le soursi a cliqué
      */
     public void sourisCliquer(int ci, int cj) throws CloneNotSupportedException {
+        if(!finPartie()) {
+            // essayer d'une autre manière
+            // verifier si on a déjà créé un chemin qui commence avec ce type
+            if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
 
-        // essayer d'une autre manière
-        // verifier si on a déjà créé un chemin qui commence avec ce type
-        if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
+                // si vrai, on supprime le vieux chemin
+                modificationSupprimer(tab_jeu[ci][cj].type);
+                // et on rémets le chemin_courant à 0
+                chemin = new Chemin();
 
-            // si vrai, on supprime le vieux chemin
-            modificationSupprimer(tab_jeu[ci][cj].type);
-            // et on rémets le chemin_courant à 0
-            chemin = new Chemin();
+                // si on essaye de comménce un chemin sur une case vide, on affiche un message dans la console
+            } else if (tab_jeu[ci][cj].type == CaseType.empty) {
 
-            // si on essaye de comménce un chemin sur une case vide, on affiche un message dans la console
-        } else if (tab_jeu[ci][cj].type == CaseType.empty) {
+                System.out.println("On n'a pas le droit de commencer sur cette case");
+                chemin = new Chemin();
 
-            System.out.println("On n'a pas le droit de commencer sur cette case");
-            chemin = new Chemin();
+                // autrement on commence un nouveau chemin
+            } else chemin.cheminStart(tab_jeu[ci][cj]);
 
-            // autrement on commence un nouveau chemin
-        } else chemin.cheminStart(tab_jeu[ci][cj]);
+        }
 
     }
 
@@ -351,7 +351,7 @@ public class Jeux extends Observable {
             i++;
         }while(i < nombre_chemin);
         nombre_chemin = nombre_chemin -1 ;
-        afficherTabChemin();
+
 
     }
 
@@ -392,15 +392,6 @@ public class Jeux extends Observable {
         }
 
         return -1;
-    }
-
-    /**
-     * méthode qui aide avec le debugage
-     */
-    public void afficherTabChemin(){
-        for (int m = 0; m < nombre_chemin; m++) {
-           // tab_chemin[m].afficherChemin();
-        }
     }
 
     /**

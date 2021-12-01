@@ -42,6 +42,7 @@ public class VueCase extends JPanel {
 
     public Image img0 = null;    public Image img1 = null;    public Image img2 = null;    public Image img3 = null;
     public Image img4 = null;    public Image img5 = null;    public Image img6 = null;    public Image img7 = null;    public Image img8 = null;
+    public Image imgFin = null;
 
 
 
@@ -78,6 +79,8 @@ public class VueCase extends JPanel {
         if(c.type_chemin != CaseType.empty){
             set_couleur_lignes(g);
         }
+
+
 
 
         switch(c.type) {
@@ -158,7 +161,6 @@ public class VueCase extends JPanel {
 
     public void set_couleur_lignes(Graphics g){
 
-
         switch (c.type_chemin){
             case S1 :
                 g.setColor(Color.decode("#a6d864")); //vert
@@ -190,7 +192,11 @@ public class VueCase extends JPanel {
         }
     }
 
+    public void afficherFinPartie(Graphics g){
 
+        g.drawImage(imgFin, 100, 100, 100, 100, this);
+
+    }
 
     public void chargement_images(){
 
@@ -204,7 +210,9 @@ public class VueCase extends JPanel {
             img5 = ImageIO.read(new File("../data/images/noir.png"));
             img6 = ImageIO.read(new File("../data/images/orange.jpg"));
             img7 = ImageIO.read(new File("../data/images/rose.png"));
-            img8 = ImageIO.read(new File("../data/images/rouge.jpg")); */
+            img8 = ImageIO.read(new File("../data/images/rouge.jpg"));
+            imgFin = ImageIO.read(new File("../data/images/imageFin.jpg"));
+         */
 
 
             img0 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\vert.png"));
@@ -216,7 +224,7 @@ public class VueCase extends JPanel {
             img6 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\orange.jpg"));
             img7 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rose.png"));
             img8 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rouge.jpg"));
-
+            imgFin = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\imageFin.jpg"));
         } catch (IOException e) {
             System.out.println("\nL'image ne pouvait pas charger. \n");
         }

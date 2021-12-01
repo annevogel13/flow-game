@@ -46,6 +46,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                         System.out.println("mousePressed : " + e.getSource());
                         try {
                             jeu.sourisCliquer(ci,cj);
+
                         } catch (CloneNotSupportedException ex) {
                             ex.printStackTrace();
                         }
@@ -68,7 +69,7 @@ public class VueControleurGrille extends JFrame implements Observer{
                         // code d'avant jeu.sourisRelacher(ci,cj);
 
                         try {
-                            jeu.sourisRelacher(ci,cj);
+                            jeu.sourisRelacher();
 
                         } catch (CloneNotSupportedException ex) {
                             ex.printStackTrace();
@@ -96,8 +97,6 @@ public class VueControleurGrille extends JFrame implements Observer{
         setContentPane(contentPane);
 
     }
-
-
 
     @Override
     public void update(Observable o, Object arg) {
