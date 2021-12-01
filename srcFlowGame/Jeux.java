@@ -10,7 +10,7 @@ public class Jeux extends Observable {
     public int nbr_formes;
 
     // Chemin
-    public int MAX_CHEMIN = 9;
+    public int MAX_CHEMIN = 20;
     public int nombre_chemin;
     public Chemin chemin;
 
@@ -66,7 +66,6 @@ public class Jeux extends Observable {
 
             chemin.troisCaseDeduireType(chemin.chemin_courant[i - 1], chemin.chemin_courant[i], chemin.chemin_courant[i + 1], tab_jeu);
             chemin.chemin_courant[i].type = tab_jeu[chemin.chemin_courant[i].x][chemin.chemin_courant[i].y].type;
-           // System.out.println("change " + chemin.chemin_courant[i].x + "," + chemin.chemin_courant[i].y + " en " + chemin.chemin_courant[i].type);
 
             setChanged();
             notifyObservers();
@@ -86,9 +85,6 @@ public class Jeux extends Observable {
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
 
-           // tab_chemin[nombre_chemin].chemin_courant = chemin.chemin_courant;
-           // tab_chemin[nombre_chemin].taille_chemin_courant = chemin.taille_chemin_courant;
-
         Chemin chemin_clone = (Chemin) chemin.clone();
         tab_chemin[nombre_chemin].chemin_courant = chemin_clone.chemin_courant;
         tab_chemin[nombre_chemin].taille_chemin_courant = chemin_clone.taille_chemin_courant;
@@ -99,16 +95,12 @@ public class Jeux extends Observable {
         //ajoute_chemin_a_tab_jeu(tab_chemin[nombre_chemin-1]);
 
 
-
          }
 
         chemin = new Chemin();
     }
 
-
-
     public void ajoute_chemin_a_tab_jeu(Chemin c){
-
 
         for(int i = 0; i < c.taille_chemin_courant; i++){
             int x = c.chemin_courant[i].x;
@@ -117,13 +109,13 @@ public class Jeux extends Observable {
             tab_jeu[x][y].type_chemin = c.chemin_courant[i].type_chemin;
 
         }
-        for(int v = 0 ; v < 6; v++){
+       /* for(int v = 0 ; v < 6; v++){
             for(int j = 0 ; j < 6; j++){
 
                 System.out.print("_" + tab_jeu[v][j].type_chemin + " ");
             }
             System.out.println("\n");
-        }
+        } */
     }
 
     public void lire_fichier_texte(String s) throws IOException {
@@ -171,13 +163,13 @@ public class Jeux extends Observable {
                     //vérifications
                     System.out.print( "\n  Jeu choisi : dimension = " + this.size + " niveau = " + this.niveau + " nbr de formes à relier = " + this.nbr_formes);
                     System.out.print("\n \n Version avec solutions : \n \n");
-                    for (int i = 0 ; i < this.size ; i++){
+                   /* for (int i = 0 ; i < this.size ; i++){
                         for(int j = 0; j < this.size ; j++){
                             System.out.print(this.tab_chemins[i][j]);
                             System.out.print(" ");
                         }
                         System.out.print("\n");
-                    }
+                    } */
                 }
             }
             br.close(); // On ferme le flux
@@ -258,9 +250,7 @@ public class Jeux extends Observable {
                         case "Y" -> tab_jeu[i][j].type = CaseType.S8;
                         case "Z" -> tab_jeu[i][j].type = CaseType.S9;
                     }
-
                 }
-
             }
         }
     }
@@ -268,8 +258,6 @@ public class Jeux extends Observable {
     /**
      * méthode qui règle toutes les réponses sur l'événement "mouseReleased"
      */
-
-   // public void sourisRelacher(int ci, int cj){
     public void sourisRelacher(int ci, int cj) throws CloneNotSupportedException {
 
         chemin.afficherChemin();
@@ -277,21 +265,20 @@ public class Jeux extends Observable {
         // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
         if (!(checkOccurenceChemin(chemin.chemin_courant[0].type)) && chemin.prem_der_egales()) {
 
-            // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
-            verif_chemin();
-
-        } else /* if((chemin.taille_chemin_courant == 0)&& (testEtat(chemin.chemin_courant[0].type))){ // veut dire qu'on a cliqué et relache sur le même case
-                // veut dire qu'on veut supprimer le chemin, après on verifier que le S_ appartient bien dans le tab_chemin[]
-                System.out.println("detuire chemin");
-                if(checkOccurenceChemin(chemin.chemin_courant[0].type)){
-
-                    modificationSupprimer(tab_jeu[ci][cj].type);
-
+                for(int i = 1; i< chemin.taille_chemin_courant; i++){
+                    boolean x = chemin.chemin_courant[0].x == chemin.chemin_courant[i].x;
+                    boolean y = chemin.chemin_courant[0].y == chemin.chemin_courant[i].y;
+                    boolean type = chemin.chemin_courant[0].type == chemin.chemin_courant[i].type;
+                    if( (x && y) && type){
+                        System.out.println("275 on repasse sur le même case");
+                        chemin = new Chemin();
+                    }
                 }
 
-                chemin = new Chemin();
+                // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
+                verif_chemin();
 
-        } else*/{
+        } else{
             // on remet le chemin_courante à 0
             chemin = new Chemin();
             // afficher le tableau des chemins
@@ -301,6 +288,7 @@ public class Jeux extends Observable {
         setChanged();
         notifyObservers();
     }
+
 
     // verifier si une etat est en forme de S_
     public boolean testEtat(CaseType T){
@@ -320,19 +308,21 @@ public class Jeux extends Observable {
 
         // essayer d'une autre manière
         // verifier si on a déjà créé un chemin qui commence avec ce type
-        if(checkOccurenceChemin(tab_jeu[ci][cj].type)) {
+        if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
+
             // si vrai, on supprime le vieux chemin
-                modificationSupprimer(tab_jeu[ci][cj].type);
-                // et on rémets le chemin_courant à 0
-                chemin = new Chemin();
-                setChanged();
-                notifyObservers();
+            modificationSupprimer(tab_jeu[ci][cj].type);
+            // et on rémets le chemin_courant à 0
+            chemin = new Chemin();
+
             // si on essaye de comménce un chemin sur une case vide, on affiche un message dans la console
-        } else if(tab_jeu[ci][cj].type == CaseType.empty){
+        } else if (tab_jeu[ci][cj].type == CaseType.empty) {
+
             System.out.println("On n'a pas le droit de commencer sur cette case");
             chemin = new Chemin();
+
             // autrement on commence un nouveau chemin
-        }else chemin.cheminStart(tab_jeu[ci][cj]);
+        } else chemin.cheminStart(tab_jeu[ci][cj]);
 
     }
 
@@ -368,16 +358,6 @@ public class Jeux extends Observable {
     }
 
     /**
-     * méthode qui enleve la dernière chemin crée avec un bouton undo
-     */
-    /* public void enleverDerniereChemin(){
-
-        CaseType typeASupprimer = tab_chemin[nombre_chemin-1].chemin_courant[0].type;
-        modificationSupprimer(typeASupprimer);
-
-    } */
-
-    /**
      * méthode qui enleve un chemin specifique dans le tab_chemin (quand on clique sur l'icone)
      * * @param indiceDansTabChemin l'indice de chemin dans tab_chemin qui doit être supprimé
      */
@@ -390,7 +370,6 @@ public class Jeux extends Observable {
         int i = indiceDansTabChemin ;
         do{
             // on deplace tous les chemins une à gauche dans le tab_chemin
-            // TODO verifier si ça fonctionne bien
             tab_chemin[i] = tab_chemin[i+1].clone();
             i++;
         }while(i < nombre_chemin);

@@ -40,7 +40,6 @@ public class Chemin implements Cloneable{
 
         // droite = 1, gauche = -1, haut = 2, bas = -2
         if((compare_deux_cases(tab_case_voisine[0], c_suivante))){
-
             c.direction_case_suivante = 2;
             return true;
         }
@@ -208,8 +207,3 @@ public class Chemin implements Cloneable{
     }
 
 }
-
-
-
-
-//ATTENTION quand on fait (1,2) ça fait en réalité (2,1) REPERE CHANGE
