@@ -51,42 +51,6 @@ public class Jeux extends Observable {
 
     }
 
-    public void lanchement_nouveau_jeu(int size, int _niveau) throws IOException {
-        this.niveau = _niveau;
-        this.size = size;
-        this.nombre_chemin = 0;
-
-        tab_chemin = new Chemin[MAX_CHEMIN];
-        for(int i = 0; i< MAX_CHEMIN; i++){
-            tab_chemin[i] = new Chemin();
-        }
-
-        String str_niveau = new String();
-        String str_dimension = new String();
-        String str_dim_niv = new String();
-        str_niveau = String.valueOf(niveau);
-        str_dimension = String.valueOf(size);
-        str_dim_niv = str_dimension + " " + str_niveau;
-        lire_fichier_texte(str_dim_niv);
-
-        creation_tab_joueur();
-
-        this.tab_jeu = new CaseModele[size][size];
-
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                tab_jeu[i][j] = new CaseModele(i, j);
-            }
-        }
-
-        init_tab_jeu();
-        chemin = new Chemin();
-
-        System.out.println(" nbr forme = " + nbr_formes + " jeu " + tab_joueur[0][0]);
-
-        setChanged();
-        notifyObservers();
-    }
 
     /**
      * méthode qui parcour le chemin_courante et en déduit le type des cases dans chemin_courante
@@ -310,7 +274,7 @@ public class Jeux extends Observable {
     public boolean testEtat(CaseType T){
 
         return switch (T) {
-            case S1, S2, S3, S4, S5, S6, S7, S8 -> true;
+            case S1, S2, S3, S4, S5, S6, S7, S8, S9 -> true;
             default -> false;
         };
     }

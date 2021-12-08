@@ -153,7 +153,7 @@ public class VueControleurGrille extends JFrame implements Observer{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    nouvelle_partie(9,1);
+                    nouvelle_partie(9,1 );
 
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -220,6 +220,7 @@ public class VueControleurGrille extends JFrame implements Observer{
 
                         }
 
+
                     }
 
                 });
@@ -242,7 +243,7 @@ public class VueControleurGrille extends JFrame implements Observer{
     }
 
     public static void main(String[] args) throws IOException {
-        Jeux jeu = new Jeux(6,1);
+        Jeux jeu = new Jeux(5,1);
         VueControleurGrille vue = new VueControleurGrille(jeu);
         jeu.addObserver(vue);
         vue.setVisible(true);
