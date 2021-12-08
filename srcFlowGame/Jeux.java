@@ -51,12 +51,6 @@ public class Jeux extends Observable {
 
     }
 
-    public void rnd(int i, int j) {
-        tab_jeu[i][j].rndType();
-        setChanged();
-        notifyObservers();
-    }
-
     /**
      * méthode qui parcour le chemin_courante et en déduit le type des cases dans chemin_courante
      */
@@ -240,7 +234,7 @@ public class Jeux extends Observable {
 
     /**
      * méthode qui régle tous les événements par apport à souris relacher
-     * @throws CloneNotSupportedException
+     * @throws CloneNotSupportedException pour assurer que le clone d'un chemin passe bien
      */
     public void sourisRelacher() throws CloneNotSupportedException {
         if(!finPartie()) {
@@ -352,9 +346,7 @@ public class Jeux extends Observable {
         }while(i < nombre_chemin);
         nombre_chemin = nombre_chemin -1 ;
 
-
     }
-
 
     /**
      * méthode qui vérifie si le chemin qu'on a déssiner, est déjà dans le tab_chemin[]
@@ -410,8 +402,6 @@ public class Jeux extends Observable {
                 }
             }
         }
-
         return nombre_chemin == nbr_formes ;
-
     }
 }

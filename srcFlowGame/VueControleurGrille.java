@@ -90,7 +90,6 @@ public class VueControleurGrille extends JFrame implements Observer{
                     }
 
                 });
-
             }
         }
 
