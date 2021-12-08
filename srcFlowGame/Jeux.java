@@ -49,8 +49,6 @@ public class Jeux extends Observable {
         init_tab_jeu();
         chemin = new Chemin();
 
-
-
     }
 
     public void lanchement_nouveau_jeu(int size, int _niveau) throws IOException {
@@ -86,7 +84,6 @@ public class Jeux extends Observable {
 
         System.out.println(" nbr forme = " + nbr_formes + " jeu " + tab_joueur[0][0]);
 
-
         setChanged();
         notifyObservers();
     }
@@ -106,6 +103,10 @@ public class Jeux extends Observable {
         }
     }
 
+    /**
+     * méthode qui verifie si une chemin est valide
+     * @throws CloneNotSupportedException
+     */
     public void verif_chemin() throws CloneNotSupportedException {
         boolean bool1;
         boolean bool2;
@@ -113,7 +114,6 @@ public class Jeux extends Observable {
         bool1 = chemin.prem_der_egales();
         //2 - on vérifie que les cases se suivent
         bool2 = chemin.verif_chemin();
-
 
         //3- on l'ajoute au tableau de chemins trouvés
         if(bool1 && bool2){
@@ -125,22 +125,24 @@ public class Jeux extends Observable {
 
         nombre_chemin += 1;
         ajoute_chemin_a_tab_jeu(chemin_clone);
-        //ajoute_chemin_a_tab_jeu(tab_chemin[nombre_chemin-1]);
-
 
          }
 
         chemin = new Chemin();
     }
 
+    /**
+     * méthode qui ajoute un chemin au tableau de jeu.
+     * @param c : chemin (qu'on vient de dessiner)
+     */
     public void ajoute_chemin_a_tab_jeu(Chemin c){
 
         for(int i = 0; i < c.taille_chemin_courant; i++){
+
             int x = c.chemin_courant[i].x;
             int y = c.chemin_courant[i].y;
             tab_jeu[x][y].type = c.chemin_courant[i].type;
             tab_jeu[x][y].type_chemin = c.chemin_courant[i].type_chemin;
-
         }
     }
 
@@ -228,7 +230,6 @@ public class Jeux extends Observable {
             }
         }
 
-
         //2 - On supprime les minuscules (qui sont les réponses) donc ASCII > 95
         this.tab_joueur = new String[this.size][this.size];
         for(int i = 0; i < this.size; i++){
@@ -277,10 +278,13 @@ public class Jeux extends Observable {
      * @throws CloneNotSupportedException pour assurer que le clone d'un chemin passe bien
      */
     public void sourisRelacher() throws CloneNotSupportedException {
+        // tant que la partie n'est pas finie, on fait :
         if(!finPartie()) {
+
             // verifier si ce type de case S_ est déjà dans le tab_chemin et si le chemin va bien de S_ à S_
             if (!(checkOccurenceChemin(chemin.chemin_courant[0].type)) && chemin.prem_der_egales()) {
 
+                // verifier si le chemin n'est pas déja dans tab_chemin
                 if (!chemin.checkDoubleCaseDansChemin()) {
                     // on verifie si c'est un bon chemin, si vrai on affiche le chemin (dans la fonction)
                     verif_chemin();
@@ -298,8 +302,11 @@ public class Jeux extends Observable {
 
     }
 
-
-    // verifier si une etat est en forme de S_
+    /**
+     * verifier si une etat est en forme de S_
+     * @param T : CaseType comme S_ ou h_v_
+     * @return boolean : vrai si c'est un type S_, else faux
+     */
     public boolean testEtat(CaseType T){
 
         return switch (T) {
@@ -314,8 +321,9 @@ public class Jeux extends Observable {
      * @param cj coördinate y de case tab_jeu ou le soursi a cliqué
      */
     public void sourisCliquer(int ci, int cj) throws CloneNotSupportedException {
+        // tant que la partie n'est pas finie, on prend les clics de souris en compte.
         if(!finPartie()) {
-            // essayer d'une autre manière
+
             // verifier si on a déjà créé un chemin qui commence avec ce type
             if (checkOccurenceChemin(tab_jeu[ci][cj].type)) {
 
@@ -332,9 +340,7 @@ public class Jeux extends Observable {
 
                 // autrement on commence un nouveau chemin
             } else chemin.cheminStart(tab_jeu[ci][cj]);
-
         }
-
     }
 
     /**
@@ -370,7 +376,7 @@ public class Jeux extends Observable {
 
     /**
      * méthode qui enleve un chemin specifique dans le tab_chemin (quand on clique sur l'icone)
-     * * @param indiceDansTabChemin l'indice de chemin dans tab_chemin qui doit être supprimé
+     * @param indiceDansTabChemin l'indice de chemin dans tab_chemin qui doit être supprimé
      */
     public void enleverCheminSpecifique(int indiceDansTabChemin) throws CloneNotSupportedException {
 
@@ -384,6 +390,7 @@ public class Jeux extends Observable {
             tab_chemin[i] = tab_chemin[i+1].clone();
             i++;
         }while(i < nombre_chemin);
+
         nombre_chemin = nombre_chemin -1 ;
 
     }
@@ -406,7 +413,6 @@ public class Jeux extends Observable {
                 }
             }
         }
-
         return false;
     }
 
