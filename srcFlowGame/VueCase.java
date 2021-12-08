@@ -7,10 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-// TODO : redéfinir la fonction hashValue() et equals(Object) si vous souhaitez utiliser la hashmap de VueControleurGrille avec VueCase en clef
 
 public class VueCase extends JPanel {
-
 
     public CaseModele c;
 
@@ -42,9 +40,6 @@ public class VueCase extends JPanel {
 
     public Image img0 = null;    public Image img1 = null;    public Image img2 = null;    public Image img3 = null;
     public Image img4 = null;    public Image img5 = null;    public Image img6 = null;    public Image img7 = null;    public Image img8 = null;
-    public Image imgFin = null;
-
-
 
     @Override
     public void paintComponent(Graphics g) {
@@ -79,9 +74,6 @@ public class VueCase extends JPanel {
         if(c.type_chemin != CaseType.empty){
             set_couleur_lignes(g);
         }
-
-
-
 
         switch(c.type) {
             case S1 :
@@ -153,11 +145,11 @@ public class VueCase extends JPanel {
 
         }
     }
+
     public String toString() {
         return c.x + ", " + c.y;
 
     }
-
 
     public void set_couleur_lignes(Graphics g){
 
@@ -192,12 +184,6 @@ public class VueCase extends JPanel {
         }
     }
 
-    public void afficherFinPartie(Graphics g){
-
-        g.drawImage(imgFin, 100, 100, 100, 100, this);
-
-    }
-
     public void chargement_images(){
 
         try {
@@ -224,7 +210,7 @@ public class VueCase extends JPanel {
             img6 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\orange.jpg"));
             img7 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rose.png"));
             img8 = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\rouge.jpg"));
-            imgFin = ImageIO.read(new File("C:\\Users\\Merel\\IdeaProjects\\lifap7\\data\\images\\imageFin.jpg"));
+
         } catch (IOException e) {
             System.out.println("\nL'image ne pouvait pas charger. \n");
         }
