@@ -40,7 +40,6 @@ public class VueControleurGrille extends JFrame implements Observer{
 
         menuBar.add(menu);
 
-
         g51 = new JMenuItem(new AbstractAction(" Taille : 5  Niveau 1") {
 
             @Override
@@ -162,8 +161,6 @@ public class VueControleurGrille extends JFrame implements Observer{
             }
         });
 
-
-
         menu.add(g51);  menu.add(g52); menu.add(g53); menu.add(g61); menu.add(g62);
         menu.add(g63);  menu.add(g71); menu.add(g72); menu.add(g81); menu.add(g91);
 
@@ -192,7 +189,6 @@ public class VueControleurGrille extends JFrame implements Observer{
                         }
                     }
 
-
                     @Override
                     public void mouseEntered(MouseEvent e) {
                         currentComponent = (JComponent) e.getSource();
@@ -206,15 +202,12 @@ public class VueControleurGrille extends JFrame implements Observer{
                         //System.out.println("mouseReleased : " + currentComponent);
                         System.out.println("chemin de : "+ e.getSource()+" a "+currentComponent);
 
-                        // code d'avant jeu.sourisRelacher(ci,cj);
-
                         try {
                             jeu.sourisRelacher();
 
                         } catch (CloneNotSupportedException ex) {
                             ex.printStackTrace();
                         }
-
 
                         for(int i = 0 ; i < tabCV.length; i++){
                             for(int j = 0 ; j < tabCV.length; j++){
