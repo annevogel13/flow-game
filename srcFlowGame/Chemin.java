@@ -28,7 +28,7 @@ public class Chemin implements Cloneable{
 
     /**
      * méthode qui verif si toutes les cases dans chemin, sont composé des cases voisines
-     * @return vrai : ils y sont tous des voisins , faux sinon.
+     * @return vrai : ils y sont tous des voisins, faux sinon.
      */
     public boolean verif_chemin(){
         for(int i = 0; i < taille_chemin_courant-1; i++){
