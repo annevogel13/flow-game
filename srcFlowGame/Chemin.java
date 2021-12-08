@@ -1,9 +1,12 @@
 public class Chemin implements Cloneable{
+
     CaseModele[] chemin_courant;
     int taille_chemin_courant;
     int TAILLE_MAX = 50;
 
-
+    /**
+     *  initialisation
+     */
     public Chemin() {
         chemin_courant = new CaseModele[TAILLE_MAX];
         taille_chemin_courant = 0;
@@ -17,11 +20,16 @@ public class Chemin implements Cloneable{
 
         }
     }
+
     @Override
     public Chemin clone() throws CloneNotSupportedException {
         return (Chemin)super.clone();
     }
 
+    /**
+     * méthode qui verif si toutes les cases dans chemin, sont composé des cases voisines
+     * @return vrai : ils y sont tous des voisins , faux sinon.
+     */
     public boolean verif_chemin(){
         for(int i = 0; i < taille_chemin_courant-1; i++){
             if(!(verif_case_voisine(chemin_courant[i], chemin_courant[i+1]))){
@@ -31,6 +39,12 @@ public class Chemin implements Cloneable{
         return true;
     }
 
+    /**
+     * vérification de deux cases voisine
+     * @param c : casemodele cournante
+     * @param c_suivante : casemodele suivante
+     * @return boolean : vrai si ils y sont voisins, false sinon.
+     */
     public boolean verif_case_voisine(CaseModele c, CaseModele c_suivante){
         CaseModele[] tab_case_voisine = new CaseModele[4];
         tab_case_voisine[0]= new CaseModele(c.x - 1,  c.y); //haut
@@ -60,8 +74,12 @@ public class Chemin implements Cloneable{
         }
     }
 
+    /**
+     * vérifie si le premiere et le derniere case dans tab_chemin sont du meme type
+     * @return boolean : vrai si il sont egale, false sinon
+     */
     public boolean prem_der_egales(){
-        //System.out.print("\n " + chemin_courant[0].type +  " " + chemin_courant[taille_chemin_courant-1].x + "  " + chemin_courant[taille_chemin_courant-1].y + " " +chemin_courant[taille_chemin_courant-1].type );
+
         if(taille_chemin_courant ==0){ return false ; }
 
         return chemin_courant[0].type == chemin_courant[taille_chemin_courant-1].type;
@@ -91,8 +109,10 @@ public class Chemin implements Cloneable{
 
         chemin_courant[taille_chemin_courant].x = cm.x;
         chemin_courant[taille_chemin_courant].y = cm.y;
+
         chemin_courant[taille_chemin_courant].type = cm.type;
         chemin_courant[taille_chemin_courant].type_chemin = cm.type_chemin;
+
         this.taille_chemin_courant = taille_chemin_courant + 1;
 
     }
@@ -205,7 +225,3 @@ public class Chemin implements Cloneable{
         return false;
     }
 }
-
-
-
-
